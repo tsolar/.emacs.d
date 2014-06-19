@@ -196,12 +196,16 @@
 
 
 ;;; hooks
+;; rainbow-mode
 (add-hook 'css-mode-hook 'rainbow-mode)
 (add-hook 'php-mode-hook 'rainbow-mode)
 (add-hook 'html-helper-mode-hook 'rainbow-mode)
 (add-hook 'lua-mode-hook 'rainbow-mode)
 (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
 
+;; flymake
+(add-hook 'haml-mode-hook 'flymake-haml-load)
+(add-hook 'php-mode-hook 'flymake-php-load)
 ;;;;;;;;;;;; end modes config
 
 
