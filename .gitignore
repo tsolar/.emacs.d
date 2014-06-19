@@ -1,0 +1,7 @@
+*~
+*.elc
+/elpa
+tramp
+auto-save-list
+tmp
+*_flymake*
