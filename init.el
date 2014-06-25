@@ -111,7 +111,10 @@
  '(tramp-default-method "ssh")
  '(transient-mark-mode 1)
  '(web-mode-enable-part-face nil)
- '(which-function-mode t))
+ '(which-function-mode t)
+ '(flymake-phpcs-standard "PSR2")
+ '(flymake-phpcs-location 'tempdir)
+)
 
 
 
@@ -145,8 +148,24 @@
 (require 'package)
 (package-initialize)
 
+(load "lua-mode")
 (load "php-mode")
 (load "web-mode")
+(load "flymake-easy")
+(load "flymake-cursor")
+(load "rainbow-mode")
+(load "flycheck")
+
+(require 'flymake-haml)
+(require 'flymake-jslint)
+(require 'flymake-json)
+(require 'flymake-lua)
+(require 'flymake-php)
+(require 'flymake-phpcs)
+(require 'flymake-shell)
+(require 'flymake-jshint)
+(require 'flymake-python-pyflakes)
+
 
 ;;;;;;;;;;;;; modes loaded
 
@@ -156,7 +175,6 @@
 
 ;; Associate an engine
 ;; A specific engine can be forced with web-mode-engines-alist.
-
 (setq web-mode-engines-alist
       '(("php"    . "\\.phtml\\'")
         ("blade"  . "\\.blade\\."))
@@ -193,7 +211,7 @@
   )
 (add-hook 'web-mode-hook 'web-mode-hook)
 
-
+(setq flymake-python-pyflakes-executable "flake8")
 
 ;;; hooks
 ;; rainbow-mode
@@ -206,6 +224,17 @@
 ;; flymake
 (add-hook 'haml-mode-hook 'flymake-haml-load)
 (add-hook 'php-mode-hook 'flymake-php-load)
+(add-hook 'php-mode-hook 'flymake-phpcs-load)
+(add-hook 'lua-mode-hook 'flymake-lua-load)
+(add-hook 'css-mode-hook 'flymake-css-load)
+(add-hook 'js-mode-hook 'flymake-jslint-load)
+(add-hook 'js2-mode-hook 'flymake-jslint-load)
+(add-hook 'lua-mode-hook 'flymake-lua-load)
+(add-hook 'yaml-mode-hook 'flymake-yaml-load)
+(add-hook 'sh-set-shell-hook 'flymake-shell-load)
+(add-hook 'js-mode-hook 'flymake-mode)
+(add-hook 'js2-mode-hook 'flymake-mode)
+(add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
 ;;;;;;;;;;;; end modes config
 
 
