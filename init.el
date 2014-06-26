@@ -178,6 +178,14 @@
 (add-to-list 'auto-mode-alist '("sshd?_config\\'" . ssh-config-mode))
 (add-hook 'ssh-config-mode-hook 'turn-on-font-lock)
 
+;; nginx-mode
+(add-to-list 'auto-mode-alist '("/etc/nginx/nginx.conf\\'" . nginx-mode))
+(add-to-list 'auto-mode-alist '("/etc/nginx/sites-\\(enabled\\|available\\)/.*\\'" . nginx-mode))
+
+;; varnish-mode
+(add-to-list 'auto-mode-alist '("\\.vcl\\'" . vcl-mode))
+
+
 ;; Associate an engine
 ;; A specific engine can be forced with web-mode-engines-alist.
 (setq web-mode-engines-alist
