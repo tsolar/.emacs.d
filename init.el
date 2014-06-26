@@ -172,6 +172,11 @@
 
 ;;;;;;;;;;;; modes configs
 
+;; ssh-config-mode
+(autoload 'ssh-config-mode "ssh-config-mode" t)
+(add-to-list 'auto-mode-alist '(".ssh/config\\'"  . ssh-config-mode))
+(add-to-list 'auto-mode-alist '("sshd?_config\\'" . ssh-config-mode))
+(add-hook 'ssh-config-mode-hook 'turn-on-font-lock)
 
 ;; Associate an engine
 ;; A specific engine can be forced with web-mode-engines-alist.
@@ -213,6 +218,12 @@
 
 (setq flymake-python-pyflakes-executable "flake8")
 
+(setq flycheck-tip-avoid-show-func nil)
+
+
+;; yaml
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+
 ;;; hooks
 ;; rainbow-mode
 (add-hook 'css-mode-hook 'rainbow-mode)
@@ -229,6 +240,7 @@
 (add-hook 'css-mode-hook 'flymake-css-load)
 (add-hook 'js-mode-hook 'flymake-jslint-load)
 (add-hook 'js2-mode-hook 'flymake-jslint-load)
+(add-hook 'js3-mode-hook 'flymake-jslint-load)
 (add-hook 'lua-mode-hook 'flymake-lua-load)
 (add-hook 'yaml-mode-hook 'flymake-yaml-load)
 (add-hook 'sh-set-shell-hook 'flymake-shell-load)
