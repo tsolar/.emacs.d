@@ -73,6 +73,8 @@
  '(erc-public-away-p t)
  '(erc-speedbar-sort-users-type (quote alphabetical))
  '(erc-user-full-name "Tomás Solar")
+ '(flymake-phpcs-location (quote tempdir))
+ '(flymake-phpcs-standard "PSR2")
  '(flyspell-mode 1 t)
  '(git-state-modeline-decoration (quote git-state-decoration-small-dot))
  '(global-hl-line-mode t)
@@ -107,14 +109,12 @@
  '(smtpmail-smtp-service 25)
  '(tab-always-indent t)
  '(text-mode-hook (quote (text-mode-hook-identify)))
+ '(tramp-chunksize 5000)
  '(tramp-default-host "localhost")
  '(tramp-default-method "ssh")
  '(transient-mark-mode 1)
  '(web-mode-enable-part-face nil)
- '(which-function-mode t)
- '(flymake-phpcs-standard "PSR2")
- '(flymake-phpcs-location 'tempdir)
-)
+ '(which-function-mode t))
 
 
 
