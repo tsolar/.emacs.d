@@ -126,6 +126,7 @@
 ;; after mouse selection in X11, you can paste by `yank' in emacs
 (setq x-select-enable-primary t)
 
+(setq tramp-auto-save-directory "~/tmp/emacs-auto-save")
 
 ;;; faces
 (custom-set-faces
