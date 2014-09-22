@@ -114,6 +114,7 @@
  '(which-function-mode t)
  '(flymake-phpcs-standard "PSR2")
  '(flymake-phpcs-location 'tempdir)
+ '(ispell-list-command "--list")
 )
 
 
