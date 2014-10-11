@@ -73,9 +73,12 @@
  '(erc-public-away-p t)
  '(erc-speedbar-sort-users-type (quote alphabetical))
  '(erc-user-full-name "Tomás Solar")
+ '(flymake-phpcs-location (quote tempdir))
+ '(flymake-phpcs-standard "PSR2")
  '(flyspell-mode 1 t)
  '(git-state-modeline-decoration (quote git-state-decoration-small-dot))
  '(global-hl-line-mode t)
+ '(global-hl-line-sticky-flag nil)
  '(global-linum-mode t)
  '(global-subword-mode t)
  '(haml-backspace-backdents-nesting nil)
@@ -86,6 +89,8 @@
  '(ido-mode 1 nil (ido))
  '(indent-tabs-mode t)
  '(inhibit-startup-screen t)
+ '(ispell-extra-args (quote ("--sug-mode=fast")))
+ '(ispell-list-command "--list")
  '(iswitchb-mode 1)
  '(jabber-show-offline-contacts nil)
  '(jabber-show-resources nil)
@@ -111,12 +116,7 @@
  '(tramp-default-method "ssh")
  '(transient-mark-mode 1)
  '(web-mode-enable-part-face nil)
- '(which-function-mode t)
- '(flymake-phpcs-standard "PSR2")
- '(flymake-phpcs-location 'tempdir)
- '(ispell-list-command "--list")
- '(ispell-extra-args '("--sug-mode=fast"))
-)
+ '(which-function-mode t))
 
 
 
@@ -137,6 +137,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
+ '(hl-line ((t (:background "black"))))
  '(web-mode-block-face ((t nil)))
  '(web-mode-current-element-highlight-face ((t nil)))
  '(web-mode-inlay-face ((t nil)))
@@ -168,7 +169,6 @@
 (require 'flymake-shell)
 (require 'flymake-jshint)
 (require 'flymake-python-pyflakes)
-
 
 ;;;;;;;;;;;;; modes loaded
 
@@ -235,6 +235,11 @@
 ;; yaml
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
+;; csv
+(add-to-list 'auto-mode-alist '("\\.[Cc][Ss][Vv]\\'" . csv-mode))
+(autoload 'csv-mode "csv-mode"
+  "Major mode for editing comma-separated value files." t)
+
 ;;; hooks
 ;; rainbow-mode
 (add-hook 'css-mode-hook 'rainbow-mode)
@@ -258,6 +263,11 @@
 (add-hook 'js-mode-hook 'flymake-mode)
 (add-hook 'js2-mode-hook 'flymake-mode)
 (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
+
+(add-hook 'yaml-mode-hook
+    '(lambda ()
+       (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+
 ;;;;;;;;;;;; end modes config
 
 
