@@ -47,6 +47,16 @@
 (global-set-key (kbd "S-M-<down>") 'move-line-down)
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; revert
+
+(global-auto-revert-mode 1)
+(setq auto-revert-verbose nil)
+
+(global-set-key (kbd "<f5>") 'revert-buffer)
+
+;; end revert
+
 ;;; Variables
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
