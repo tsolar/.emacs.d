@@ -5,3 +5,4 @@ tramp
 auto-save-list
 tmp
 *_flymake*
+session.*
