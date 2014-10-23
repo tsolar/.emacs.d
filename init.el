@@ -43,8 +43,8 @@
   (forward-line -1))
 
 
-(global-set-key (kbd "S-M-<up>") 'move-line-up)
-(global-set-key (kbd "S-M-<down>") 'move-line-down)
+(global-set-key (kbd "S-M-<up>") 'move-text-up)
+(global-set-key (kbd "S-M-<down>") 'move-text-down)
 
 
 ;;; Variables
