@@ -3,7 +3,7 @@
 			 ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 
-(add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 (add-to-list 'load-path "~/.emacs.d/elpa")
 
 ;;;;;;;;;;;;; General settings
