@@ -3,7 +3,7 @@
 			 ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 
-(add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 (add-to-list 'load-path "~/.emacs.d/elpa")
 
 ;;;;;;;;;;;;; General settings
@@ -43,8 +43,8 @@
   (forward-line -1))
 
 
-(global-set-key (kbd "S-M-<up>") 'move-line-up)
-(global-set-key (kbd "S-M-<down>") 'move-line-down)
+(global-set-key (kbd "S-M-<up>") 'move-text-up)
+(global-set-key (kbd "S-M-<down>") 'move-text-down)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
