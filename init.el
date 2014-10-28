@@ -53,7 +53,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
+ '(ansi-color-names-vector
+   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
  '(blink-cursor-mode nil)
  '(c-default-style "bsd")
  '(c-tab-always-indent nil)
@@ -67,7 +68,9 @@
  '(erc-autoaway-mode t)
  '(erc-away-nickname nil)
  '(erc-join-buffer (quote window-noselect))
- '(erc-modules (quote (completion list menu scrolltobottom autojoin button dcc fill irccontrols match move-to-prompt netsplit networks noncommands readonly ring stamp spelling track)))
+ '(erc-modules
+   (quote
+    (completion list menu scrolltobottom autojoin button dcc fill irccontrols match move-to-prompt netsplit networks noncommands readonly ring stamp spelling track)))
  '(erc-nick-notify-mode t)
  '(erc-prompt ">")
  '(erc-public-away-p t)
@@ -77,6 +80,7 @@
  '(flymake-phpcs-standard "PSR2")
  '(flyspell-mode 1 t)
  '(git-state-modeline-decoration (quote git-state-decoration-small-dot))
+ '(global-diff-hl-mode t)
  '(global-hl-line-mode t)
  '(global-hl-line-sticky-flag nil)
  '(global-linum-mode t)
@@ -99,8 +103,13 @@
  '(js2-cleanup-whitespace t)
  '(js2-enter-indents-newline t)
  '(less-css-compile-at-save t)
- '(rainbow-x-colors-major-mode-list (quote (emacs-lisp-mode lisp-interaction-mode c-mode c++-mode java-mode lua-mode html-helper-mode php-mode css-mode lisp-mode)))
- '(safe-local-variable-values (quote ((less-css-output-directory . "../css") (less-css-compile-at-save . t))))
+ '(rainbow-x-colors-major-mode-list
+   (quote
+    (emacs-lisp-mode lisp-interaction-mode c-mode c++-mode java-mode lua-mode html-helper-mode php-mode css-mode lisp-mode)))
+ '(safe-local-variable-values
+   (quote
+    ((less-css-output-directory . "../css")
+     (less-css-compile-at-save . t))))
  '(save-place t nil (saveplace))
  '(scroll-conservatively 1)
  '(send-mail-function (quote smtpmail-send-it))
