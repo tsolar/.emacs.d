@@ -164,7 +164,7 @@
 (package-initialize)
 
 (load "lua-mode")
-(load "php-mode")
+;;(load "php-mode")
 (load "web-mode")
 (load "flymake-easy")
 (load "flymake-cursor")
