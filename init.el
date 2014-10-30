@@ -1,5 +1,5 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-			 ;; ("marmalade" . "http://marmalade-repo.org/packages/")
+			 ("marmalade" . "http://marmalade-repo.org/packages/")
 			 ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 
@@ -101,11 +101,12 @@
  '(identica-soft-wrap-status t)
  '(ido-enable-flex-matching t)
  '(ido-mode 1 nil (ido))
+ ;;'(ido-separator "\n")
  '(indent-tabs-mode t)
  '(inhibit-startup-screen t)
  '(ispell-extra-args (quote ("--sug-mode=fast")))
  '(ispell-list-command "--list")
- '(iswitchb-mode 1)
+ ;;'(iswitchb-mode 1)
  '(jabber-show-offline-contacts nil)
  '(jabber-show-resources nil)
  '(js2-auto-indent-p t)
@@ -179,6 +180,7 @@
 (load "flymake-cursor")
 (load "rainbow-mode")
 (load "flycheck")
+(load "tea-time")
 
 (require 'flymake-haml)
 (require 'flymake-jslint)
