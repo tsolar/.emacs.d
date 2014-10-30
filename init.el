@@ -46,6 +46,8 @@
 (global-set-key (kbd "S-M-<up>") 'move-text-up)
 (global-set-key (kbd "S-M-<down>") 'move-text-down)
 
+;; cycle through buffers
+(global-set-key (kbd "<C-tab>") 'bury-buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; revert
@@ -216,7 +218,7 @@
 (setq web-mode-engines-alist
       '(("php"    . "\\.phtml\\'")
         ("blade"  . "\\.blade\\."))
-)
+      )
 
 (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
@@ -287,8 +289,8 @@
 (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
 
 (add-hook 'yaml-mode-hook
-    '(lambda ()
-       (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+	  '(lambda ()
+	     (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
 
 ;;;;;;;;;;;; end modes config
 
