@@ -6,3 +6,4 @@ auto-save-list
 tmp
 *_flymake*
 session.*
+/emms
