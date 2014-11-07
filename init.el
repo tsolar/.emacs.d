@@ -109,12 +109,10 @@
  '(identica-soft-wrap-status t)
  '(ido-enable-flex-matching t)
  '(ido-mode 1 nil (ido))
- ;;'(ido-separator "\n")
  '(indent-tabs-mode t)
  '(inhibit-startup-screen t)
  '(ispell-extra-args (quote ("--sug-mode=fast")))
  '(ispell-list-command "--list")
- ;;'(iswitchb-mode 1)
  '(jabber-show-offline-contacts nil)
  '(jabber-show-resources nil)
  '(js2-auto-indent-p t)
@@ -133,7 +131,7 @@
  '(scroll-conservatively 1)
  '(send-mail-function (quote smtpmail-send-it))
  '(show-paren-mode t)
- '(show-paren-style (quote expression))
+ '(show-paren-style (quote mixed))
  '(size-indication-mode t)
  '(sml-modeline-mode t)
  '(smtpmail-smtp-server "mail.gnuchile.cl")
@@ -172,12 +170,13 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
- '(hl-line ((t (:background "black"))))
+ '(cursor ((t (:background "green"))))
+ '(show-paren-match ((t (:background "gray30" :foreground nil))))
+ '(highlight ((t (:background "#000" :foreground nil))))
  '(web-mode-block-face ((t nil)))
  '(web-mode-current-element-highlight-face ((t nil)))
  '(web-mode-inlay-face ((t nil)))
  '(web-mode-part-face ((t nil))))
-
 
 ;;;;;;;;;;;;;;; end general settings
 
@@ -206,7 +205,6 @@
 (require 'flymake-jshint)
 (require 'flymake-python-pyflakes)
 (require 'notifications)
-
 
 
 ;;;;;;;;;;;;; modes loaded
