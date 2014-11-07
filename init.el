@@ -74,7 +74,7 @@
  '(ansi-color-names-vector
    ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
  '(blink-cursor-mode nil)
- '(c-default-style "bsd")
+ ;;'(c-default-style "bsd")
  '(c-tab-always-indent nil)
  '(column-number-mode t)
  '(cua-mode t nil (cua-base))
@@ -195,6 +195,21 @@
 (load "flycheck")
 (load "tea-time")
 
+(require 'auto-complete)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(require 'auto-complete-config)
+(ac-config-default)
+
+(require 'php-auto-yasnippets)
+;; (load "php-auto-yasnippets")
+(define-key php-mode-map (kbd "C-c C-y") 'yas/create-php-snippet)
+(payas/ac-setup)
+
+(require 'emmet-mode)
+(require 'ac-emmet)
+(add-hook 'sgml-mode-hook 'ac-emmet-html-setup)
+(add-hook 'css-mode-hook 'ac-emmet-css-setup)
+
 (require 'flymake-haml)
 (require 'flymake-jslint)
 (require 'flymake-json)
@@ -258,11 +273,29 @@
 (setq web-mode-enable-comment-keywords t)
 (setq web-mode-enable-heredoc-fontification t)
 (setq web-mode-disable-css-colorization nil)
+(setq web-mode-enable-current-element-highlight t)
 (defun web-mode-hook ()
   "Hooks for Web mode."
   (setq web-mode-markup-indent-offset 2)
   )
 (add-hook 'web-mode-hook 'web-mode-hook)
+
+(setq web-mode-ac-sources-alist
+      '(("php" . (ac-source-yasnippet ac-source-php-auto-yasnippets))
+	("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
+	("css" . (ac-source-css-property ac-source-emmet-css-snippets))))
+
+(add-hook 'web-mode-before-auto-complete-hooks
+          '(lambda ()
+             (let ((web-mode-cur-language
+                    (web-mode-language-at-pos)))
+               (if (string= web-mode-cur-language "php")
+                   (yas-activate-extra-mode 'php-mode)
+                 (yas-deactivate-extra-mode 'php-mode))
+               (if (string= web-mode-cur-language "css")
+                   (setq emmet-use-css-transform t)
+                 (setq emmet-use-css-transform nil)))))
+
 
 (setq flymake-python-pyflakes-executable "flake8")
 
@@ -312,6 +345,11 @@
 				  :app-name "Tea Time"
 				  :sound-name "alarm-clock-elapsed")))
 
+(add-hook 'php-mode-hook (lambda () (setq comment-start "// "
+					  comment-end ""
+					  comment-style 'indent
+					  comment-use-syntax t
+					  )))
 ;;;;;;;;;;;; end modes config
 
 
@@ -333,6 +371,42 @@
 (setq flymake-number-of-errors-to-display nil)
 ;;;;;;; end flymake
 
+;; paren-mode-helper
+(defadvice show-paren-function
+    (after show-matching-paren-offscreen activate)
+  "If the matching paren is offscreen, show the matching line in the
+        echo area. Has no effect if the character before point is not of
+        the syntax class ')'."
+  (interactive)
+  (let* ((cb (char-before (point)))
+  	 (matching-text (and cb
+  			     (char-equal (char-syntax cb) ?\) )
+  			     (blink-matching-open))))
+    (when matching-text (message matching-text))))
+
+;;;; the following makes a jump to code, I do not like that :/
+;; (defadvice show-paren-function (after my-echo-paren-matching-line activate)
+;;   "If a matching paren is off-screen, echo the matching line."
+;;   (when (char-equal (char-syntax (char-before (point))) ?\))
+;;     (let ((matching-text (blink-matching-open)))
+;;       (when matching-text
+;;         (message matching-text)))))
+;; end paren mode helper
+
+;;; comment or uncomment line or region
+(defun comment-or-uncomment-current-line-or-region ()
+  "Comments or uncomments current current line or whole lines in region."
+  (interactive)
+  (save-excursion
+    (let (min max)
+      (if (region-active-p)
+          (setq min (region-beginning) max (region-end))
+        (setq min (point) max (point)))
+      (comment-or-uncomment-region
+       (progn (goto-char min) (line-beginning-position))
+       (progn (goto-char max) (line-end-position))))))
+(global-set-key (kbd "C-S-c") 'comment-or-uncomment-current-line-or-region)
+;;; end comment or uncoment...
 
 ;;; EMMS
 
