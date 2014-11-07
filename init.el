@@ -74,11 +74,11 @@
  '(ansi-color-names-vector
    ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
  '(blink-cursor-mode nil)
- ;;'(c-default-style "bsd")
  '(c-tab-always-indent nil)
  '(column-number-mode t)
  '(cua-mode t nil (cua-base))
  '(custom-enabled-themes (quote (deeper-blue)))
+ '(delete-selection-mode t)
  '(display-battery-mode t)
  '(display-time-mode t)
  '(electric-pair-mode t)
@@ -123,6 +123,7 @@
  '(rainbow-x-colors-major-mode-list
    (quote
     (emacs-lisp-mode lisp-interaction-mode c-mode c++-mode java-mode lua-mode html-helper-mode php-mode css-mode lisp-mode)))
+ '(recentf-mode t)
  '(safe-local-variable-values
    (quote
     ((less-css-output-directory . "../css")
@@ -171,8 +172,8 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
  '(cursor ((t (:background "green"))))
- '(show-paren-match ((t (:background "gray30" :foreground nil))))
  '(highlight ((t (:background "#000" :foreground nil))))
+ '(show-paren-match ((t (:background "gray30" :foreground nil))))
  '(web-mode-block-face ((t nil)))
  '(web-mode-current-element-highlight-face ((t nil)))
  '(web-mode-inlay-face ((t nil)))
@@ -220,7 +221,6 @@
 (require 'flymake-jshint)
 (require 'flymake-python-pyflakes)
 (require 'notifications)
-
 
 ;;;;;;;;;;;;; modes loaded
 
