@@ -350,6 +350,34 @@
 					  comment-style 'indent
 					  comment-use-syntax t
 					  )))
+
+;; indent region after exit yasnippet
+(add-hook 'yas/after-exit-snippet-hook
+	  '(lambda ()
+	     (indent-region yas/snippet-beg yas/snippet-end)))
+
+;; I am using yasnippet in PHP mode, so, load minor mode!
+(add-hook 'php-mode-hook 'yas-minor-mode)
+
+;;;; Disable flymake during expansion
+(defvar flymake-is-active-flag nil)
+
+(defadvice yas/expand-snippet
+  (before inhibit-flymake-syntax-checking-while-expanding-snippet activate)
+  (setq flymake-is-active-flag
+        (or flymake-is-active-flag
+            (assoc-default 'flymake-mode (buffer-local-variables))))
+  (when flymake-is-active-flag
+    (flymake-mode-off)))
+
+(add-hook 'yas/after-exit-snippet-hook
+          '(lambda ()
+             (when flymake-is-active-flag
+               (flymake-mode-on)
+               (setq flymake-is-active-flag nil))))
+;;; end disable flymake during expansion
+
+
 ;;;;;;;;;;;; end modes config
 
 
@@ -405,7 +433,7 @@
       (comment-or-uncomment-region
        (progn (goto-char min) (line-beginning-position))
        (progn (goto-char max) (line-end-position))))))
-(global-set-key (kbd "C-S-c") 'comment-or-uncomment-current-line-or-region)
+(global-set-key (kbd "C-7") 'comment-or-uncomment-current-line-or-region)
 ;;; end comment or uncoment...
 
 ;;; EMMS
