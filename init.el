@@ -172,8 +172,8 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
  '(cursor ((t (:background "green"))))
- '(highlight ((t (:background "#000" :foreground nil))))
- '(show-paren-match ((t (:background "gray30" :foreground nil))))
+ ;;'(highlight ((t (:background "#000" :foreground nil))))
+ ;;'(show-paren-match ((t (:background "magenta" :foreground nil))))
  '(web-mode-block-face ((t nil)))
  '(web-mode-current-element-highlight-face ((t nil)))
  '(web-mode-inlay-face ((t nil)))
@@ -221,6 +221,9 @@
 (require 'flymake-jshint)
 (require 'flymake-python-pyflakes)
 (require 'notifications)
+
+(require 'hl-anything)
+(require 'hl-paren-mode)
 
 ;;;;;;;;;;;;; modes loaded
 
