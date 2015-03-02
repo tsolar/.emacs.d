@@ -100,7 +100,6 @@
  '(delete-selection-mode t)
  '(display-battery-mode t)
  '(display-time-mode t)
- ;;'(electric-pair-mode t)
  '(erc-auto-query (quote window-noselect))
  '(erc-autoaway-mode t)
  '(erc-away-nickname nil)
@@ -139,6 +138,7 @@
  '(js2-cleanup-whitespace t)
  '(js2-enter-indents-newline t)
  '(less-css-compile-at-save t)
+ '(password-cache-expiry nil)
  '(rainbow-x-colors-major-mode-list
    (quote
     (emacs-lisp-mode lisp-interaction-mode c-mode c++-mode java-mode lua-mode html-helper-mode php-mode css-mode lisp-mode)))
@@ -188,8 +188,6 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
  '(cursor ((t (:background "green"))))
- ;;'(highlight ((t (:background "#000" :foreground nil))))
- ;;'(show-paren-match ((t (:background "magenta" :foreground nil))))
  '(web-mode-block-face ((t nil)))
  '(web-mode-current-element-highlight-face ((t nil)))
  '(web-mode-inlay-face ((t nil)))
