@@ -1,11 +1,27 @@
 (setq debug-on-error t)
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-			 ("marmalade" . "http://marmalade-repo.org/packages/")
-			 ("melpa" . "http://melpa.milkbox.net/packages/")))
 
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+			 ("elpa" . "http://tromey.com/elpa/")
+			 ("melpa" . "http://melpa.milkbox.net/packages/")
+			 ("marmalade" . "http://marmalade-repo.org/packages/")
+			 ))
+; list the packages you want
+(setq package-list '(ac-emmet auto-complete popup emmet-mode auto-complete popup color-theme-github color-theme csv-mode diff-hl drupal-mode php-mode elscreen emmet-mode emms-info-mediainfo emms f dash s flycheck-pyflakes flycheck let-alist pkg-info epl dash flycheck-tip s popup dash flycheck let-alist pkg-info epl dash flylisp flymake-css flymake-easy flymake-cursor flymake-gjshint flymake-haml flymake-easy flymake-hlint flymake-easy flymake-jshint flymake-easy flymake-jslint flymake-easy flymake-json flymake-easy flymake-less less-css-mode flymake-lua flymake-php flymake-easy flymake-phpcs flymake-easy flymake-python-pyflakes flymake-easy flymake-ruby flymake-easy flymake-sass flymake-easy flymake-shell flymake-easy flymake-yaml flymake-easy github-theme gitignore-mode hl-anything js3-mode json-mode json-snatcher json-reformat json-reformat json-snatcher less-css-mode let-alist lua-mode magit git-rebase-mode git-commit-mode markdown-mode minimap move-text nginx-mode php-auto-yasnippets yasnippet php-mode php-mode pkg-info epl popup rainbow-mode s sass-mode haml-mode scss-mode smartparens dash ssh-config-mode syslog-mode hide-lines tea-time twittering-mode vcl-mode web-beautify web-mode yaml-mode yasnippet))
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (add-to-list 'load-path "~/.emacs.d/elpa")
+
+; activate all the packages (in particular autoloads)
+(package-initialize)
+
+; fetch the list of packages available
+(unless package-archive-contents
+  (package-refresh-contents))
+
+; install the missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
 
 
 
@@ -164,9 +180,6 @@
 ;; disable linum
 (setq linum-disabled-modes-list '(eshell-mode wl-summary-mode compilation-mode emms)) (defun linum-on () (unless (or (minibufferp) (member major-mode linum-disabled-modes-list)) (linum-mode 1)))
 
-
-
-
 ;;; faces
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -188,7 +201,7 @@
 ;;;;;;;; Lets load the modes
 ;; init.el
 (require 'package)
-(package-initialize)
+;(package-initialize)
 
 (load "lua-mode")
 ;;(load "php-mode")
