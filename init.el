@@ -217,6 +217,8 @@
 (global-set-key [f8] 'neotree-toggle)
 
 (require 'smartparens-config)
+(sp-local-pair 'web-mode "{" "}" :actions nil)
+(sp-local-pair 'web-mode "<" ">" :actions nil)
 
 (require 'auto-complete)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
@@ -646,7 +648,8 @@
 
 ;;; tex-mode latex-mode
 (sp-with-modes '(tex-mode plain-tex-mode latex-mode)
-  (sp-local-tag "i" "\"<" "\">"))
+  (sp-local-tag "i" "\"<" "\">")
+  (sp-local-tag "<"  "<_>" "</_>" :transform 'sp-match-sgml-tags))
 
 ;;; html-mode
 (sp-with-modes '(html-mode sgml-mode)
