@@ -6,7 +6,7 @@
 			 ("marmalade" . "http://marmalade-repo.org/packages/")
 			 ))
 ; list the packages you want
-(setq package-list '(ac-emmet auto-complete popup emmet-mode auto-complete popup color-theme-github color-theme csv-mode diff-hl drupal-mode php-mode elscreen emmet-mode emms-info-mediainfo emms f dash s flycheck-pyflakes flycheck let-alist pkg-info epl dash flycheck-tip s popup dash flycheck let-alist pkg-info epl dash flylisp flymake-css flymake-easy flymake-cursor flymake-gjshint flymake-haml flymake-easy flymake-hlint flymake-easy flymake-jshint flymake-easy flymake-jslint flymake-easy flymake-json flymake-easy flymake-less less-css-mode flymake-lua flymake-php flymake-easy flymake-phpcs flymake-easy flymake-python-pyflakes flymake-easy flymake-ruby flymake-easy flymake-sass flymake-easy flymake-shell flymake-easy flymake-yaml flymake-easy github-theme gitignore-mode hl-anything js3-mode json-mode json-snatcher json-reformat json-reformat json-snatcher less-css-mode let-alist lua-mode magit git-rebase-mode git-commit-mode markdown-mode minimap move-text nginx-mode php-auto-yasnippets yasnippet php-mode php-mode pkg-info epl popup rainbow-mode s sass-mode haml-mode scss-mode smartparens dash ssh-config-mode syslog-mode hide-lines tea-time twittering-mode vcl-mode web-beautify web-mode yaml-mode yasnippet))
+(setq package-list '(ac-emmet auto-complete popup emmet-mode auto-complete popup color-theme-github color-theme csv-mode diff-hl drupal-mode php-mode elscreen emmet-mode emms-info-mediainfo emms f dash s flycheck-pyflakes flycheck let-alist pkg-info epl dash flycheck-tip s popup dash flycheck let-alist pkg-info epl dash flylisp flymake-css flymake-easy flymake-cursor flymake-gjshint flymake-haml flymake-easy flymake-hlint flymake-easy flymake-jshint flymake-easy flymake-jslint flymake-easy flymake-json flymake-easy flymake-less less-css-mode flymake-lua flymake-php flymake-easy flymake-phpcs flymake-easy flymake-python-pyflakes flymake-easy flymake-ruby flymake-easy flymake-sass flymake-easy flymake-shell flymake-easy flymake-yaml flymake-easy github-theme gitignore-mode hl-anything js3-mode json-mode json-snatcher json-reformat json-reformat json-snatcher less-css-mode let-alist lua-mode magit git-rebase-mode git-commit-mode markdown-mode minimap move-text neotree nginx-mode php-auto-yasnippets yasnippet php-mode php-mode pkg-info epl popup rainbow-mode s sass-mode haml-mode scss-mode smartparens dash ssh-config-mode syslog-mode hide-lines tea-time twittering-mode vcl-mode web-beautify web-mode yaml-mode yasnippet))
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (add-to-list 'load-path "~/.emacs.d/elpa")
@@ -100,6 +100,7 @@
  '(delete-selection-mode t)
  '(display-battery-mode t)
  '(display-time-mode t)
+ '(ecb-options-version "2.40")
  '(erc-auto-query (quote window-noselect))
  '(erc-autoaway-mode t)
  '(erc-away-nickname nil)
@@ -210,6 +211,11 @@
 (load "flycheck")
 (load "tea-time")
 
+(require 'ecb)
+
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+
 (require 'smartparens-config)
 
 (require 'auto-complete)
@@ -319,6 +325,24 @@
 (setq flymake-python-pyflakes-executable "flake8")
 
 (setq flycheck-tip-avoid-show-func nil)
+
+;; web-beautify
+(eval-after-load 'js2-mode
+  '(define-key js2-mode-map (kbd "C-c b") 'web-beautify-js))
+(eval-after-load 'js3-mode
+  '(define-key js3-mode-map (kbd "C-c b") 'web-beautify-js))
+;; Or if you're using 'js-mode' (a.k.a 'javascript-mode')
+(eval-after-load 'js
+  '(define-key js-mode-map (kbd "C-c b") 'web-beautify-js))
+
+(eval-after-load 'json-mode
+  '(define-key json-mode-map (kbd "C-c b") 'web-beautify-js))
+
+(eval-after-load 'sgml-mode
+  '(define-key html-mode-map (kbd "C-c b") 'web-beautify-html))
+
+(eval-after-load 'css-mode
+  '(define-key css-mode-map (kbd "C-c b") 'web-beautify-css))
 
 
 ;; yaml
