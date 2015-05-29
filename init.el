@@ -75,6 +75,8 @@
 (global-set-key "\C-xk" 'kill-this-buffer) ; Kill buffer without confirmation
 (global-set-key "\C-c\C-d" "\C-a\C- \C-n\M-w\C-y\C-p") ; clone current line
 
+(global-set-key (kbd "C-x g") 'magit-status)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; revert
 
@@ -215,6 +217,9 @@
 (load "flycheck")
 (load "tea-time")
 (load "iedit")
+
+(global-git-gutter+-mode)
+(require 'git-gutter-fringe+)
 
 (require 'ecb)
 
@@ -429,7 +434,25 @@
                (setq flymake-is-active-flag nil))))
 ;;; end disable flymake during expansion
 
+;; git-gutter+
+(eval-after-load 'git-gutter+
+  '(progn
+     ;;; Jump between hunks
+     (define-key git-gutter+-mode-map (kbd "C-x n") 'git-gutter+-next-hunk)
+     (define-key git-gutter+-mode-map (kbd "C-x p") 'git-gutter+-previous-hunk)
 
+     ;;; Act on hunks
+     (define-key git-gutter+-mode-map (kbd "C-x v =") 'git-gutter+-show-hunk)
+     (define-key git-gutter+-mode-map (kbd "C-x r") 'git-gutter+-revert-hunks)
+
+     ;; Stage hunk at point.
+     ;; If region is active, stage all hunk lines within the region.
+     (define-key git-gutter+-mode-map (kbd "C-x t") 'git-gutter+-stage-hunks)
+     (define-key git-gutter+-mode-map (kbd "C-x c") 'git-gutter+-commit)
+     (define-key git-gutter+-mode-map (kbd "C-x C") 'git-gutter+-stage-and-commit)
+     (define-key git-gutter+-mode-map (kbd "C-x C-y") 'git-gutter+-stage-and-commit-whole-buffer)
+     (define-key git-gutter+-mode-map (kbd "C-x U") 'git-gutter+-unstage-whole-buffer)))
+;; end git-gutter+
 ;;;;;;;;;;;; end modes config
 
 
