@@ -140,6 +140,7 @@
  '(js2-cleanup-whitespace t)
  '(js2-enter-indents-newline t)
  '(less-css-compile-at-save t)
+ '(magit-auto-revert-mode nil)
  '(password-cache-expiry nil)
  '(rainbow-x-colors-major-mode-list
    (quote
