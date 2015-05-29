@@ -5,8 +5,9 @@
 			 ("melpa" . "http://melpa.milkbox.net/packages/")
 			 ("marmalade" . "http://marmalade-repo.org/packages/")
 			 ))
-; list the packages you want
-(setq package-list '(ac-emmet auto-complete popup emmet-mode auto-complete popup color-theme-github color-theme csv-mode diff-hl drupal-mode php-mode elscreen emmet-mode emms-info-mediainfo emms f dash s flycheck-pyflakes flycheck let-alist pkg-info epl dash flycheck-tip s popup dash flycheck let-alist pkg-info epl dash flylisp flymake-css flymake-easy flymake-cursor flymake-gjshint flymake-haml flymake-easy flymake-hlint flymake-easy flymake-jshint flymake-easy flymake-jslint flymake-easy flymake-json flymake-easy flymake-less less-css-mode flymake-lua flymake-php flymake-easy flymake-phpcs flymake-easy flymake-python-pyflakes flymake-easy flymake-ruby flymake-easy flymake-sass flymake-easy flymake-shell flymake-easy flymake-yaml flymake-easy github-theme gitignore-mode hl-anything js3-mode json-mode json-snatcher json-reformat json-reformat json-snatcher less-css-mode let-alist lua-mode magit git-rebase-mode git-commit-mode markdown-mode minimap move-text neotree nginx-mode php-auto-yasnippets yasnippet php-mode php-mode pkg-info epl popup rainbow-mode s sass-mode haml-mode scss-mode smartparens dash ssh-config-mode syslog-mode hide-lines tea-time twittering-mode vcl-mode web-beautify web-mode yaml-mode yasnippet))
+;; list the packages you want
+;; with C-h v package-activated-list
+(setq package-list '(ac-emmet auto-complete popup emmet-mode auto-complete popup color-theme-github color-theme csv-mode diff-hl drupal-mode php-mode easy-repeat elscreen emmet-mode emms-info-mediainfo emms f dash s flycheck-pyflakes flycheck let-alist pkg-info epl dash flycheck-tip s popup dash flycheck let-alist pkg-info epl dash flylisp flymake-css flymake-easy flymake-cursor flymake-gjshint flymake-haml flymake-easy flymake-hlint flymake-easy flymake-jshint flymake-easy flymake-jslint flymake-easy flymake-json flymake-easy flymake-less less-css-mode flymake-lua flymake-php flymake-easy flymake-phpcs flymake-easy flymake-python-pyflakes flymake-easy flymake-ruby flymake-easy flymake-sass flymake-easy flymake-shell flymake-easy flymake-yaml flymake-easy github-theme gitignore-mode hl-anything js3-mode json-mode json-snatcher json-reformat json-reformat json-snatcher less-css-mode let-alist lua-mode magit git-rebase-mode git-commit-mode markdown-mode minimap move-text neotree nginx-mode php-auto-yasnippets yasnippet php-mode php-mode pkg-info epl popup rainbow-mode s sass-mode haml-mode scss-mode smartparens dash ssh-config-mode syslog-mode hide-lines tea-time twittering-mode vcl-mode web-beautify web-mode yaml-mode yasnippet iedit))
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (add-to-list 'load-path "~/.emacs.d/elpa")
@@ -72,7 +73,7 @@
 (define-key global-map "\C-ct" 'tea-time)
 
 (global-set-key "\C-xk" 'kill-this-buffer) ; Kill buffer without confirmation
-
+(global-set-key "\C-c\C-d" "\C-a\C- \C-n\M-w\C-y\C-p") ; clone current line
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; revert
@@ -146,7 +147,8 @@
  '(recentf-mode t)
  '(safe-local-variable-values
    (quote
-    ((less-css-output-directory . "../css")
+    ((encoding . utf-8)
+     (less-css-output-directory . "../css")
      (less-css-compile-at-save . t))))
  '(save-place t nil (saveplace))
  '(scroll-conservatively 1)
@@ -189,6 +191,7 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
  '(cursor ((t (:background "green"))))
+ '(iedit-occurrence ((t (:background "yellow" :foreground "black"))))
  '(web-mode-block-face ((t nil)))
  '(web-mode-current-element-highlight-face ((t nil)))
  '(web-mode-inlay-face ((t nil)))
@@ -210,6 +213,7 @@
 (load "rainbow-mode")
 (load "flycheck")
 (load "tea-time")
+(load "iedit")
 
 (require 'ecb)
 
@@ -248,6 +252,8 @@
 
 (require 'hl-anything)
 ;;(require 'hl-paren-mode)
+
+(require 'easy-repeat)
 
 ;;;;;;;;;;;;; modes loaded
 
