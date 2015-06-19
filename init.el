@@ -96,7 +96,7 @@ With negative N, comment out original line and use the absolute value."
         (forward-line 1)
         (forward-char pos)))))
 
-(global-set-key "\C-cd" 'duplicate-line-or-region) ; duplicate line or region
+(global-set-key (kbd "C-c d") 'duplicate-line-or-region) ; duplicate line or region
 (global-set-key "\C-c\C-d" "\C-a\C- \C-n\M-w\C-y\C-p") ; clone current line
 
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -167,6 +167,7 @@ With negative N, comment out original line and use the absolute value."
  '(js2-enter-indents-newline t)
  '(less-css-compile-at-save t)
  '(magit-auto-revert-mode nil)
+ '(magit-last-seen-setup-instructions "1.4.0")
  '(password-cache-expiry nil)
  '(rainbow-x-colors-major-mode-list
    (quote
