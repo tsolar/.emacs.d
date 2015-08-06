@@ -101,6 +101,9 @@ With negative N, comment out original line and use the absolute value."
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
+
+(setq gtags-auto-update nil) ;; drupal fix/workaround?
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; revert
 
@@ -122,6 +125,7 @@ With negative N, comment out original line and use the absolute value."
  '(blink-cursor-mode nil)
  '(c-tab-always-indent nil)
  '(column-number-mode t)
+ '(company-auto-complete (quote (quote company-explicit-action-p)))
  '(cua-mode t nil (cua-base))
  '(custom-enabled-themes (quote (deeper-blue)))
  '(delete-selection-mode t)
@@ -149,6 +153,7 @@ With negative N, comment out original line and use the absolute value."
  '(global-hl-line-sticky-flag nil)
  '(global-linum-mode t)
  '(global-subword-mode t)
+ '(gtags-auto-update nil t)
  '(haml-backspace-backdents-nesting nil)
  '(haml-indent-offset 4)
  '(identica-display-success-messages t)
@@ -169,6 +174,9 @@ With negative N, comment out original line and use the absolute value."
  '(magit-auto-revert-mode nil)
  '(magit-last-seen-setup-instructions "1.4.0")
  '(password-cache-expiry nil)
+ '(php-lineup-cascaded-calls t)
+ '(php-mode-coding-style (quote pear))
+ '(php-template-compatibility nil)
  '(rainbow-x-colors-major-mode-list
    (quote
     (emacs-lisp-mode lisp-interaction-mode c-mode c++-mode java-mode lua-mode html-helper-mode php-mode css-mode lisp-mode)))
@@ -193,6 +201,7 @@ With negative N, comment out original line and use the absolute value."
  '(tramp-default-host "localhost")
  '(tramp-default-method "ssh")
  '(transient-mark-mode 1)
+ '(web-mode-enable-current-column-highlight t)
  '(web-mode-enable-part-face nil)
  '(which-function-mode t))
 
@@ -221,7 +230,6 @@ With negative N, comment out original line and use the absolute value."
  '(cursor ((t (:background "green"))))
  '(iedit-occurrence ((t (:background "yellow" :foreground "black"))))
  '(web-mode-block-face ((t nil)))
- '(web-mode-current-element-highlight-face ((t nil)))
  '(web-mode-inlay-face ((t nil)))
  '(web-mode-part-face ((t nil))))
 
@@ -286,10 +294,23 @@ With negative N, comment out original line and use the absolute value."
 
 (require 'easy-repeat)
 
+(require 'company)                                   ; load company mode
+(require 'company-web-html)                          ; load company mode html backend
+
+;; you may key bind, for example for web-mode:
+(define-key web-mode-map (kbd "C-'") 'company-web-html)
+
 ;;;;;;;;;;;;; modes loaded
 
 
 ;;;;;;;;;;;; modes configs
+
+;; company-mode
+(setq company-tooltip-limit 20)                      ; bigger popup window
+(setq company-tooltip-align-annotations 't)          ; align annotations to the right tooltip border
+(setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
+(setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+;(global-set-key (kbd "C-c /") 'company-files)        ; Force complete file names on "C-c /" key
 
 ;; ssh-config-mode
 (autoload 'ssh-config-mode "ssh-config-mode" t)
@@ -307,10 +328,14 @@ With negative N, comment out original line and use the absolute value."
 
 ;; Associate an engine
 ;; A specific engine can be forced with web-mode-engines-alist.
+;;;
 (setq web-mode-engines-alist
       '(("php"    . "\\.phtml\\'")
-        ("blade"  . "\\.blade\\."))
-      )
+        ("blade"  . "\\.blade\\.")
+	("php"  . "\\.php\\.")
+	)
+)
+
 
 (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
@@ -345,7 +370,8 @@ With negative N, comment out original line and use the absolute value."
 (add-hook 'web-mode-hook 'web-mode-hook)
 
 (setq web-mode-ac-sources-alist
-      '(("php" . (ac-source-yasnippet ac-source-php-auto-yasnippets))
+      '(
+	("php" . (ac-source-yasnippet ac-source-php-auto-yasnippets))
 	("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
 	("css" . (ac-source-css-property ac-source-emmet-css-snippets))))
 
@@ -393,6 +419,11 @@ With negative N, comment out original line and use the absolute value."
   "Major mode for editing comma-separated value files." t)
 
 ;;; hooks
+;; company-mode
+(add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'web-mode-hook (lambda ()
+                          (set (make-local-variable 'company-backends) '(company-web-html))
+                          (company-mode t)))
 ;; rainbow-mode
 (add-hook 'css-mode-hook 'rainbow-mode)
 (add-hook 'php-mode-hook 'rainbow-mode)
