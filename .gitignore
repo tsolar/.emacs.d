@@ -2,9 +2,15 @@
 *.elc
 /elpa
 tramp
+places
+recentf
 auto-save-list
 tmp
 *_flymake*
 session.*
 /emms
 *.dat
+
+init*.el
+init.el*
+ido.last
