@@ -325,6 +325,11 @@ With negative N, comment out original line and use the absolute value."
 ;; varnish-mode
 (add-to-list 'auto-mode-alist '("\\.vcl\\'" . vcl-mode))
 
+;; markdown-mode
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
 ;; Associate an engine
 ;; A specific engine can be forced with web-mode-engines-alist.
@@ -420,7 +425,7 @@ With negative N, comment out original line and use the absolute value."
 
 ;;; hooks
 ;; company-mode
-(add-hook 'after-init-hook 'global-company-mode)
+;; (add-hook 'after-init-hook 'global-company-mode) ;; don't wanna load everywhere
 (add-hook 'web-mode-hook (lambda ()
                           (set (make-local-variable 'company-backends) '(company-web-html))
                           (company-mode t)))
