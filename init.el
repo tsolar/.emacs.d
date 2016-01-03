@@ -900,3 +900,7 @@ With negative N, comment out original line and use the absolute value."
 (sp-with-modes sp--lisp-modes
   (sp-local-pair "(" nil :bind "C-("))
 ;; end smart parens
+
+;(load-file (expand-file-name "custom/tabbar.el" user-emacs-directory))
+
+(require 'my-tabbar)
