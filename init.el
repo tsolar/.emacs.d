@@ -66,6 +66,10 @@
 (global-set-key (kbd "S-M-<up>") 'move-text-up)
 (global-set-key (kbd "S-M-<down>") 'move-text-down)
 
+;; cuando cambio de buffer me quedo en el buffer nuevo!
+(global-set-key "\C-x2" (lambda () (interactive)(split-window-vertically) (other-window 1)))
+(global-set-key "\C-x3" (lambda () (interactive)(split-window-horizontally) (other-window 1)))
+
 ;; cycle through buffers
 (global-set-key (kbd "<C-tab>") 'bury-buffer)
 
@@ -104,6 +108,13 @@ With negative N, comment out original line and use the absolute value."
 
 (setq gtags-auto-update nil) ;; drupal fix/workaround?
 
+;; full name in title
+(setq frame-title-format
+      (list (format "%s %%S: %%j " (system-name))
+        '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; revert
 
@@ -120,14 +131,24 @@ With negative N, comment out original line and use the absolute value."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#ad7fa8" "#8cc4ff" "#eeeeec"])
  '(blink-cursor-mode nil)
  '(c-tab-always-indent nil)
  '(column-number-mode t)
  '(company-auto-complete (quote (quote company-explicit-action-p)))
+ '(compilation-message-face (quote default))
+ '(cua-global-mark-cursor-color "#2aa198")
  '(cua-mode t nil (cua-base))
+ '(cua-normal-cursor-color "#657b83")
+ '(cua-overwrite-cursor-color "#b58900")
+ '(cua-read-only-cursor-color "#859900")
  '(custom-enabled-themes (quote (deeper-blue)))
+ '(custom-safe-themes
+   (quote
+    ("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" "405b0ac2ac4667c5dab77b36e3dd87a603ea4717914e30fcf334983f79cfd87e" default)))
  '(delete-selection-mode t)
  '(display-battery-mode t)
  '(display-time-mode t)
@@ -144,6 +165,7 @@ With negative N, comment out original line and use the absolute value."
  '(erc-public-away-p t)
  '(erc-speedbar-sort-users-type (quote alphabetical))
  '(erc-user-full-name "Tomás Solar")
+ '(fci-rule-color "#eee8d5")
  '(flymake-phpcs-location (quote tempdir))
  '(flymake-phpcs-standard "PSR2")
  '(flyspell-mode 1 t)
@@ -156,10 +178,33 @@ With negative N, comment out original line and use the absolute value."
  '(gtags-auto-update nil t)
  '(haml-backspace-backdents-nesting nil)
  '(haml-indent-offset 4)
+ '(helm-mode-fuzzy-match t)
+ '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
+ '(highlight-symbol-colors
+   (--map
+    (solarized-color-blend it "#fdf6e3" 0.25)
+    (quote
+     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
+ '(highlight-symbol-foreground-color "#586e75")
+ '(highlight-tail-colors
+   (quote
+    (("#eee8d5" . 0)
+     ("#B4C342" . 20)
+     ("#69CABF" . 30)
+     ("#69B7F0" . 50)
+     ("#DEB542" . 60)
+     ("#F2804F" . 70)
+     ("#F771AC" . 85)
+     ("#eee8d5" . 100))))
+ '(hl-bg-colors
+   (quote
+    ("#DEB542" "#F2804F" "#FF6E64" "#F771AC" "#9EA0E5" "#69B7F0" "#69CABF" "#B4C342")))
+ '(hl-fg-colors
+   (quote
+    ("#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3")))
  '(identica-display-success-messages t)
  '(identica-soft-wrap-status t)
  '(ido-enable-flex-matching t)
- '(ido-mode 1 nil (ido))
  '(indent-tabs-mode t)
  '(inhibit-startup-screen t)
  '(ispell-extra-args (quote ("--sug-mode=fast")))
@@ -172,11 +217,18 @@ With negative N, comment out original line and use the absolute value."
  '(js2-enter-indents-newline t)
  '(less-css-compile-at-save t)
  '(magit-auto-revert-mode nil)
+ '(magit-diff-use-overlays nil)
  '(magit-last-seen-setup-instructions "1.4.0")
+ '(nrepl-message-colors
+   (quote
+    ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(password-cache-expiry nil)
  '(php-lineup-cascaded-calls t)
  '(php-mode-coding-style (quote pear))
  '(php-template-compatibility nil)
+ '(pos-tip-background-color "#eee8d5")
+ '(pos-tip-foreground-color "#586e75")
+ '(projectile-require-project-root nil)
  '(rainbow-x-colors-major-mode-list
    (quote
     (emacs-lisp-mode lisp-interaction-mode c-mode c++-mode java-mode lua-mode html-helper-mode php-mode css-mode lisp-mode)))
@@ -192,18 +244,51 @@ With negative N, comment out original line and use the absolute value."
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
  '(size-indication-mode t)
+ '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
  '(sml-modeline-mode t)
  '(smtpmail-smtp-server "mail.gnuchile.cl")
  '(smtpmail-smtp-service 25)
  '(tab-always-indent t)
+ '(term-default-bg-color "#fdf6e3")
+ '(term-default-fg-color "#657b83")
  '(text-mode-hook (quote (text-mode-hook-identify)))
  '(tramp-chunksize 5000)
  '(tramp-default-host "localhost")
  '(tramp-default-method "ssh")
  '(transient-mark-mode 1)
+ '(uniquify-buffer-name-style (quote forward) nil (uniquify))
+ '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   (quote
+    ((20 . "#dc322f")
+     (40 . "#c85d17")
+     (60 . "#be730b")
+     (80 . "#b58900")
+     (100 . "#a58e00")
+     (120 . "#9d9100")
+     (140 . "#959300")
+     (160 . "#8d9600")
+     (180 . "#859900")
+     (200 . "#669b32")
+     (220 . "#579d4c")
+     (240 . "#489e65")
+     (260 . "#399f7e")
+     (280 . "#2aa198")
+     (300 . "#2898af")
+     (320 . "#2793ba")
+     (340 . "#268fc6")
+     (360 . "#268bd2"))))
+ '(vc-annotate-very-old-color nil)
  '(web-mode-enable-current-column-highlight t)
  '(web-mode-enable-part-face nil)
- '(which-function-mode t))
+ '(weechat-color-list
+   (quote
+    (unspecified "#fdf6e3" "#eee8d5" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#657b83" "#839496")))
+ '(which-function-mode t)
+ '(xterm-color-names
+   ["#eee8d5" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#073642"])
+ '(xterm-color-names-bright
+   ["#fdf6e3" "#cb4b16" "#93a1a1" "#839496" "#657b83" "#6c71c4" "#586e75" "#002b36"]))
 
 
 
@@ -251,8 +336,36 @@ With negative N, comment out original line and use the absolute value."
 (load "tea-time")
 (load "iedit")
 
-(global-git-gutter+-mode)
-(require 'git-gutter-fringe+)
+;;(require 'ido)
+;;(ido-mode t)
+
+;; undo-tree http://www.dr-qubit.org/git/undo-tree.git
+(global-undo-tree-mode)
+
+(bash-completion-setup)
+
+(require 'flx-ido)
+(ido-mode 1)
+(ido-everywhere 1)
+(flx-ido-mode 1)
+;; disable ido faces to see flx highlights.
+(setq ido-enable-flex-matching t)
+(setq ido-use-faces nil)
+
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
+
+;; rails rinari-mode
+;;(require 'rinari)
+;;(load "rinari")
+;;(global-rinari-mode)
+
+;;(setq rinari-tags-file-name "TAGS")
+
+
+;; (global-git-gutter+-mode)
+;; (require 'git-gutter-fringe+)
 
 (require 'ecb)
 
@@ -296,14 +409,32 @@ With negative N, comment out original line and use the absolute value."
 
 (require 'company)                                   ; load company mode
 (require 'company-web-html)                          ; load company mode html backend
-
 ;; you may key bind, for example for web-mode:
 (define-key web-mode-map (kbd "C-'") 'company-web-html)
+
+(require 'helm-config)
+
+(helm-mode 1)
+
+;; HELM FUZZY!!!!
+(require 'helm-fuzzier)
+(helm-fuzzier-mode 1)
+
+(require 'helm-ls-git)
+
 
 ;;;;;;;;;;;;; modes loaded
 
 
 ;;;;;;;;;;;; modes configs
+
+;; ag!
+(setq ag-highlight-search t)
+(setq ag-reuse-window t)
+
+;; stop annoying when autocompleting
+(ac-linum-workaround)
+
 
 ;; company-mode
 (setq company-tooltip-limit 20)                      ; bigger popup window
@@ -311,6 +442,12 @@ With negative N, comment out original line and use the absolute value."
 (setq company-idle-delay .3)                         ; decrease delay before autocompletion popup shows
 (setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
 ;(global-set-key (kbd "C-c /") 'company-files)        ; Force complete file names on "C-c /" key
+
+;; helm company
+(eval-after-load 'company
+  '(progn
+     (define-key company-mode-map (kbd "C-:") 'helm-company)
+     (define-key company-active-map (kbd "C-:") 'helm-company)))
 
 ;; ssh-config-mode
 (autoload 'ssh-config-mode "ssh-config-mode" t)
@@ -452,6 +589,8 @@ With negative N, comment out original line and use the absolute value."
 (add-hook 'js2-mode-hook 'flymake-mode)
 (add-hook 'python-mode-hook 'flymake-python-pyflakes-load)
 
+(add-hook 'projectile-mode-hook 'projectile-rails-on)
+
 (add-hook 'yaml-mode-hook
 	  '(lambda ()
 	     (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
@@ -514,6 +653,17 @@ With negative N, comment out original line and use the absolute value."
      (define-key git-gutter+-mode-map (kbd "C-x C-y") 'git-gutter+-stage-and-commit-whole-buffer)
      (define-key git-gutter+-mode-map (kbd "C-x U") 'git-gutter+-unstage-whole-buffer)))
 ;; end git-gutter+
+
+
+;; ruby indent accessors
+(defadvice ruby-indent-line (around outdent-modifiers activate)
+  (if (save-excursion
+        (beginning-of-line)
+        (looking-at "\s*\\(private\\|protected\\|public\\)\s*$"))
+      (save-excursion
+        (beginning-of-line)
+        (just-one-space 0))
+      ad-do-it))
 ;;;;;;;;;;;; end modes config
 
 
