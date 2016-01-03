@@ -10,6 +10,9 @@ tmp
 session.*
 /emms
 *.dat
+/eshell
+projectile-bookmarks.eld
+
 
 init*.el
 init.el*
