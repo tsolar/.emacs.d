@@ -3,6 +3,11 @@
 (load "~/.emacs.d/lisp/my-packages.el")
 (require 'my-packages)
 
+;; exec-path-from-shell
+(exec-path-from-shell-initialize)
+(exec-path-from-shell-copy-env "PATH")
+(exec-path-from-shell-copy-env "JAVA_HOME")
+
 ;;;;;;;;;;;;; General settings
 ;; Turn on syntax colouring in all modes supporting it:
 (global-font-lock-mode t)
@@ -153,7 +158,7 @@ With negative N, comment out original line and use the absolute value."
  '(global-diff-hl-mode t)
  '(global-hl-line-mode t)
  '(global-hl-line-sticky-flag nil)
- '(global-linum-mode t)
+ ;'(global-linum-mode t)
  '(global-subword-mode t)
  '(gtags-auto-update nil t)
  '(haml-backspace-backdents-nesting nil)
@@ -285,7 +290,9 @@ With negative N, comment out original line and use the absolute value."
 (setq tramp-auto-save-directory "~/tmp/emacs-auto-save")
 
 ;; disable linum
-(setq linum-disabled-modes-list '(eshell-mode wl-summary-mode compilation-mode emms)) (defun linum-on () (unless (or (minibufferp) (member major-mode linum-disabled-modes-list)) (linum-mode 1)))
+;(setq linum-disabled-modes-list '(eshell-mode wl-summary-mode compilation-mode emms)) (defun linum-on () (unless (or (minibufferp) (member major-mode linum-disabled-modes-list)) (linum-mode 1)))
+
+(add-hook 'prog-mode-hook 'linum-mode)
 
 ;;; faces
 (custom-set-faces

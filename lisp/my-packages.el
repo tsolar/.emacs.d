@@ -30,6 +30,7 @@
         emms
         emms-info-mediainfo
         epl
+        exec-path-from-shell
         f
         findr
         flx
