@@ -7,7 +7,7 @@
 			 ))
 ;; list the packages you want
 ;; with C-h v package-activated-list
-(setq package-list '(ac-emmet auto-complete popup emmet-mode auto-complete popup color-theme-github color-theme csv-mode diff-hl drupal-mode php-mode easy-repeat elscreen emmet-mode emms-info-mediainfo emms f dash s flycheck-pyflakes flycheck let-alist pkg-info epl dash flycheck-tip s popup dash flycheck let-alist pkg-info epl dash flylisp flymake-css flymake-easy flymake-cursor flymake-gjshint flymake-haml flymake-easy flymake-hlint flymake-easy flymake-jshint flymake-easy flymake-jslint flymake-easy flymake-json flymake-easy flymake-less less-css-mode flymake-lua flymake-php flymake-easy flymake-phpcs flymake-easy flymake-python-pyflakes flymake-easy flymake-ruby flymake-easy flymake-sass flymake-easy flymake-shell flymake-easy flymake-yaml flymake-easy github-theme gitignore-mode hl-anything js3-mode json-mode json-snatcher json-reformat json-reformat json-snatcher less-css-mode let-alist lua-mode magit markdown-mode minimap move-text neotree nginx-mode php-auto-yasnippets yasnippet php-mode php-mode pkg-info epl popup rainbow-mode s sass-mode haml-mode scss-mode smartparens dash ssh-config-mode syslog-mode hide-lines tea-time twittering-mode vcl-mode web-beautify web-mode yaml-mode yasnippet iedit))
+(setq package-list '(ac-emmet auto-complete popup emmet-mode auto-complete popup color-theme-github color-theme csv-mode diff-hl drupal-mode php-mode easy-repeat elscreen emmet-mode emms-info-mediainfo emms f dash s flycheck-pyflakes flycheck let-alist pkg-info epl dash flycheck-tip s popup dash flycheck let-alist pkg-info epl dash flylisp flymake-css flymake-easy flymake-cursor flymake-gjshint flymake-haml flymake-easy flymake-hlint flymake-easy flymake-jshint flymake-easy flymake-jslint flymake-easy flymake-json flymake-easy flymake-less less-css-mode flymake-lua flymake-php flymake-easy flymake-phpcs flymake-easy flymake-python-pyflakes flymake-easy flymake-ruby flymake-easy flymake-sass flymake-easy flymake-shell flymake-easy flymake-yaml flymake-easy github-theme gitignore-mode hl-anything js3-mode json-mode json-snatcher json-reformat json-reformat json-snatcher less-css-mode let-alist lua-mode magit markdown-mode minimap move-text neotree nginx-mode php-auto-yasnippets yasnippet php-mode php-mode pkg-info epl popup rainbow-mode s sass-mode haml-mode scss-mode smartparens dash ssh-config-mode syslog-mode hide-lines tea-time twittering-mode vcl-mode web-beautify web-mode yaml-mode yasnippet iedit railscasts-theme))
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (add-to-list 'load-path "~/.emacs.d/elpa")
@@ -125,6 +125,8 @@ With negative N, comment out original line and use the absolute value."
 
 ;; end revert
 
+
+
 ;;; Variables
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -145,10 +147,10 @@ With negative N, comment out original line and use the absolute value."
  '(cua-normal-cursor-color "#657b83")
  '(cua-overwrite-cursor-color "#b58900")
  '(cua-read-only-cursor-color "#859900")
- '(custom-enabled-themes (quote (deeper-blue)))
+ '(custom-enabled-themes (quote (railscasts)))
  '(custom-safe-themes
    (quote
-    ("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" "405b0ac2ac4667c5dab77b36e3dd87a603ea4717914e30fcf334983f79cfd87e" default)))
+    ("3b0a350918ee819dca209cec62d867678d7dac74f6195f5e3799aa206358a983" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" "405b0ac2ac4667c5dab77b36e3dd87a603ea4717914e30fcf334983f79cfd87e" default)))
  '(delete-selection-mode t)
  '(display-battery-mode t)
  '(display-time-mode t)
@@ -170,6 +172,7 @@ With negative N, comment out original line and use the absolute value."
  '(flymake-phpcs-standard "PSR2")
  '(flyspell-mode 1 t)
  '(git-state-modeline-decoration (quote git-state-decoration-small-dot))
+ '(global-auto-highlight-symbol-mode t)
  '(global-diff-hl-mode t)
  '(global-hl-line-mode t)
  '(global-hl-line-sticky-flag nil)
@@ -205,7 +208,7 @@ With negative N, comment out original line and use the absolute value."
  '(identica-display-success-messages t)
  '(identica-soft-wrap-status t)
  '(ido-enable-flex-matching t)
- '(indent-tabs-mode t)
+ '(indent-tabs-mode nil)
  '(inhibit-startup-screen t)
  '(ispell-extra-args (quote ("--sug-mode=fast")))
  '(ispell-list-command "--list")
@@ -243,12 +246,14 @@ With negative N, comment out original line and use the absolute value."
  '(send-mail-function (quote smtpmail-send-it))
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
+ '(show-trailing-whitespace t)
  '(size-indication-mode t)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
  '(sml-modeline-mode t)
  '(smtpmail-smtp-server "mail.gnuchile.cl")
  '(smtpmail-smtp-service 25)
  '(tab-always-indent t)
+ '(tabbar-separator (quote (0.5)))
  '(term-default-bg-color "#fdf6e3")
  '(term-default-fg-color "#657b83")
  '(text-mode-hook (quote (text-mode-hook-identify)))
@@ -312,14 +317,11 @@ With negative N, comment out original line and use the absolute value."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
- '(cursor ((t (:background "green"))))
- '(iedit-occurrence ((t (:background "yellow" :foreground "black"))))
  '(web-mode-block-face ((t nil)))
  '(web-mode-inlay-face ((t nil)))
  '(web-mode-part-face ((t nil))))
 
 ;;;;;;;;;;;;;;; end general settings
-
 
 ;;;;;;;; Lets load the modes
 ;; init.el
@@ -372,9 +374,6 @@ With negative N, comment out original line and use the absolute value."
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
 
-(require 'smartparens-config)
-(sp-local-pair 'web-mode "{" "}" :actions nil)
-(sp-local-pair 'web-mode "<" ">" :actions nil)
 
 (require 'auto-complete)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
@@ -725,182 +724,9 @@ With negative N, comment out original line and use the absolute value."
 
 
 
-;;; EMMS
-
-(require 'emms-setup)
-(emms-standard)
-(emms-default-players)
-
-(require 'emms-source-file)
-(require 'emms-source-playlist)
-(require 'emms-info)
-(require 'emms-cache)
-(require 'emms-playlist-mode)
-;; (require 'emms-mode-line)
-(require 'emms-playing-time)
-(require 'emms-player-mpd)
-(require 'emms-playlist-sort)
-(require 'emms-mark)
-(require 'emms-browser)
-(require 'emms-lyrics)
-(require 'emms-last-played)
-(require 'emms-score)
-;;(require 'emms-lastfm)
-
-(setq emms-playlist-default-major-mode 'emms-playlist-mode)
-
-(add-to-list 'emms-track-initialize-functions 'emms-info-initialize-track)
-;; (emms-mode-line 1)
-;; (emms-mode-line-blank)
-(emms-playing-time 1)
-(emms-lyrics 1)
-(add-hook 'emms-player-started-hook 'emms-last-played-update-current)
-(emms-score 1)
-(when (fboundp 'emms-cache)           ; work around compiler warning
-  (emms-cache 1))
-(setq emms-score-default-score 3)
-
-(require 'emms-player-mpd)
-;;Set the variables emms-player-mpd-server-name and emms-player-mpd-server-port to the location and port (respectively) of your MusicPD server. For example:
-(setq emms-player-mpd-server-name "localhost")
-(setq emms-player-mpd-server-port "6601")
-
-;; If your MusicPD setup requires a password, you will to set emms-player-mpd-server-password as follows.
-;;(setq emms-player-mpd-server-password "mypassword")
-
-;; To get track information from MusicPD, invoke the following:
-(add-to-list 'emms-info-functions 'emms-info-mpd)
-
-;; Adding `emms-player-mpd' to your Emms player list is accomplished by invoking:
-(add-to-list 'emms-player-list 'emms-player-mpd)
-
-(setq emms-player-mpd-sync-playlist t)
-
-(defvar emms-browser-info-title-format "%i%n  :: %a - %A - %T. %t")
-(defvar emms-browser-playlist-info-title-format
-  emms-browser-info-title-format)
-
-;; Playlist format
-(defun my-describe (track)
-  (let* ((empty "...")
-         (name (emms-track-name track))
-         (type (emms-track-type track))
-         (short-name (file-name-nondirectory name))
-         (play-count (or (emms-track-get track 'play-count) 0))
-         (last-played (or (emms-track-get track 'last-played) '(0 0 0)))
-         (artist (or (emms-track-get track 'info-artist) empty))
-         (year (emms-track-get track 'info-year))
-         (playing-time (or (emms-track-get track 'info-playing-time) 0))
-         (min (/ playing-time 60))
-         (sec (% playing-time 60))
-         (album (or (emms-track-get track 'info-album) empty))
-         (tracknumber (emms-track-get track 'info-tracknumber))
-         (short-name (file-name-sans-extension
-                      (file-name-nondirectory name)))
-         (title (or (emms-track-get track 'info-title) short-name))
-         (rating (emms-score-get-score name))
-         (rate-char ?☭)
-         )
-    (format "%15s - %.4s [%-20s] - %2s. %-30s |%2d %s"
-            artist
-            year
-            album
-            tracknumber
-            title
-            play-count
-            (make-string rating rate-char)))
-)
-
-(setq emms-track-description-function 'my-describe)
-;; end EMMS
-
-;; smartparent config
-;;;;;;;;;
-;; global
-;; (require 'smartparens-config)
-(smartparens-global-mode t)
-
-;; highlights matching pairs
-(show-smartparens-global-mode t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;
-;; keybinding management
-
-;; (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
-;; (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
-
-;; (define-key sp-keymap (kbd "C-M-d") 'sp-down-sexp)
-;; (define-key sp-keymap (kbd "C-M-a") 'sp-backward-down-sexp)
-;; (define-key sp-keymap (kbd "C-S-a") 'sp-beginning-of-sexp)
-;; (define-key sp-keymap (kbd "C-S-d") 'sp-end-of-sexp)
-
-;; (define-key sp-keymap (kbd "C-M-e") 'sp-up-sexp)
-;; (define-key emacs-lisp-mode-map (kbd ")") 'sp-up-sexp)
-;; (define-key sp-keymap (kbd "C-M-u") 'sp-backward-up-sexp)
-;; (define-key sp-keymap (kbd "C-M-t") 'sp-transpose-sexp)
-
-;; (define-key sp-keymap (kbd "C-M-n") 'sp-next-sexp)
-;; (define-key sp-keymap (kbd "C-M-p") 'sp-previous-sexp)
-
-;; (define-key sp-keymap (kbd "C-M-k") 'sp-kill-sexp)
-;; (define-key sp-keymap (kbd "C-M-w") 'sp-copy-sexp)
-
-;; (define-key sp-keymap (kbd "M-<delete>") 'sp-unwrap-sexp)
-;; (define-key sp-keymap (kbd "M-<backspace>") 'sp-backward-unwrap-sexp)
-
-;; (define-key sp-keymap (kbd "C-<right>") 'sp-forward-slurp-sexp)
-;; (define-key sp-keymap (kbd "C-<left>") 'sp-forward-barf-sexp)
-;; (define-key sp-keymap (kbd "C-M-<left>") 'sp-backward-slurp-sexp)
-;; (define-key sp-keymap (kbd "C-M-<right>") 'sp-backward-barf-sexp)
-
-;; (define-key sp-keymap (kbd "M-D") 'sp-splice-sexp)
-;; (define-key sp-keymap (kbd "C-M-<delete>") 'sp-splice-sexp-killing-forward)
-;; (define-key sp-keymap (kbd "C-M-<backspace>") 'sp-splice-sexp-killing-backward)
-;; (define-key sp-keymap (kbd "C-S-<backspace>") 'sp-splice-sexp-killing-around)
-
-;; (define-key sp-keymap (kbd "C-]") 'sp-select-next-thing-exchange)
-;; (define-key sp-keymap (kbd "C-<left_bracket>") 'sp-select-previous-thing)
-;; (define-key sp-keymap (kbd "C-M-]") 'sp-select-next-thing)
-
-;; (define-key sp-keymap (kbd "M-F") 'sp-forward-symbol)
-;; (define-key sp-keymap (kbd "M-B") 'sp-backward-symbol)
-
-;; (define-key sp-keymap (kbd "H-t") 'sp-prefix-tag-object)
-;; (define-key sp-keymap (kbd "H-p") 'sp-prefix-pair-object)
-;; (define-key sp-keymap (kbd "H-s c") 'sp-convolute-sexp)
-;; (define-key sp-keymap (kbd "H-s a") 'sp-absorb-sexp)
-;; (define-key sp-keymap (kbd "H-s e") 'sp-emit-sexp)
-;; (define-key sp-keymap (kbd "H-s p") 'sp-add-to-previous-sexp)
-;; (define-key sp-keymap (kbd "H-s n") 'sp-add-to-next-sexp)
-;; (define-key sp-keymap (kbd "H-s j") 'sp-join-sexp)
-;; (define-key sp-keymap (kbd "H-s s") 'sp-split-sexp)
-
-;;;;;;;;;;;;;;;;;;
-;; pair management
-
-(sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
-
-;;; markdown-mode
-(sp-with-modes '(markdown-mode gfm-mode rst-mode)
-  (sp-local-pair "*" "*" :bind "C-*")
-  (sp-local-tag "2" "**" "**")
-  (sp-local-tag "s" "```scheme" "```")
-  (sp-local-tag "<"  "<_>" "</_>" :transform 'sp-match-sgml-tags))
-
-;;; tex-mode latex-mode
-(sp-with-modes '(tex-mode plain-tex-mode latex-mode)
-  (sp-local-tag "i" "\"<" "\">")
-  (sp-local-tag "<"  "<_>" "</_>" :transform 'sp-match-sgml-tags))
-
-;;; html-mode
-(sp-with-modes '(html-mode sgml-mode)
-  (sp-local-pair "<" ">"))
-
-;;; lisp modes
-(sp-with-modes sp--lisp-modes
-  (sp-local-pair "(" nil :bind "C-("))
-;; end smart parens
-
 ;(load-file (expand-file-name "custom/tabbar.el" user-emacs-directory))
 
+(require 'my-emms)
+(require 'my-smartparents)
 (require 'my-tabbar)
+(require 'my-highlight-parentheses)
