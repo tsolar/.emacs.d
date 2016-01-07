@@ -14,3 +14,7 @@ session.*
 init*.el
 init.el*
 ido.last
+
+\#*
+*_
+*.eld
