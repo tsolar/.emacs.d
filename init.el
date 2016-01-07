@@ -238,7 +238,7 @@ With negative N, comment out original line and use the absolute value."
 
 ;;;;;;;; Lets load the modes
 ;; init.el
-(require 'package)
+;(require 'package)
 ;(package-initialize)
 
 (load "lua-mode")
@@ -250,6 +250,7 @@ With negative N, comment out original line and use the absolute value."
 (load "flycheck")
 (load "tea-time")
 (load "iedit")
+
 
 (global-git-gutter+-mode)
 (require 'git-gutter-fringe+)
@@ -274,6 +275,11 @@ With negative N, comment out original line and use the absolute value."
 (payas/ac-setup)
 
 (require 'emmet-mode)
+(add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+(add-hook 'css-mode-hook  'emmet-mode) ;; enable Emmet's css abbreviation.
+(add-hook 'web-mode-hook  'emmet-mode) ;; enable Emmet in web-mode
+(setq emmet-move-cursor-between-quotes t) ;; default nil
+
 (require 'ac-emmet)
 (add-hook 'sgml-mode-hook 'ac-emmet-html-setup)
 (add-hook 'css-mode-hook 'ac-emmet-css-setup)
@@ -294,9 +300,15 @@ With negative N, comment out original line and use the absolute value."
 
 (require 'easy-repeat)
 
-(require 'company)                                   ; load company mode
-(require 'company-web-html)                          ; load company mode html backend
+(require 'rinari)
+(global-rinari-mode)
 
+
+;(require 'company)                                   ; load company mode
+;(require 'company-web-html)                          ; load company mode html backend
+
+
+(require 'slim-mode)
 ;; you may key bind, for example for web-mode:
 (define-key web-mode-map (kbd "C-'") 'company-web-html)
 
@@ -325,6 +337,11 @@ With negative N, comment out original line and use the absolute value."
 ;; varnish-mode
 (add-to-list 'auto-mode-alist '("\\.vcl\\'" . vcl-mode))
 
+;; markdown-mode
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
 ;; Associate an engine
 ;; A specific engine can be forced with web-mode-engines-alist.
@@ -386,6 +403,31 @@ With negative N, comment out original line and use the absolute value."
                    (setq emmet-use-css-transform t)
                  (setq emmet-use-css-transform nil)))))
 
+;; JSX syntax highlighting for web-mode
+;; from https://truongtx.me/2014/03/10/emacs-setup-jsx-mode-and-jsx-syntax-checking/
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(defadvice web-mode-highlight-part (around tweak-jsx activate)
+  (if (equal web-mode-content-type "jsx")
+      (let ((web-mode-enable-part-face nil))
+        ad-do-it)
+    ad-do-it))
+
+
+;; JSX syntax checking
+;; from https://truongtx.me/2014/03/10/emacs-setup-jsx-mode-and-jsx-syntax-checking/
+(flycheck-define-checker jsxhint-checker
+  "A JSX syntax and style checker based on JSXHint."
+
+  :command ("jsxhint" source)
+  :error-patterns
+  ((error line-start (1+ nonl) ": line " line ", col " column ", " (message) line-end))
+  :modes (web-mode))
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (equal web-mode-content-type "jsx")
+              ;; enable flycheck
+              (flycheck-select-checker 'jsxhint-checker)
+              (flycheck-mode))))
 
 (setq flymake-python-pyflakes-executable "flake8")
 
@@ -419,8 +461,11 @@ With negative N, comment out original line and use the absolute value."
   "Major mode for editing comma-separated value files." t)
 
 ;;; hooks
+
+;; emmet
+
 ;; company-mode
-(add-hook 'after-init-hook 'global-company-mode)
+;; (add-hook 'after-init-hook 'global-company-mode) ;; don't wanna load everywhere
 (add-hook 'web-mode-hook (lambda ()
                           (set (make-local-variable 'company-backends) '(company-web-html))
                           (company-mode t)))
@@ -745,3 +790,133 @@ With negative N, comment out original line and use the absolute value."
 (sp-with-modes sp--lisp-modes
   (sp-local-pair "(" nil :bind "C-("))
 ;; end smart parens
+
+
+;; Tabbar
+(require 'tabbar)
+;; Tabbar settings
+(set-face-attribute
+ 'tabbar-default nil
+ :background "gray20"
+ :foreground "gray20"
+ :box '(:line-width 1 :color "gray20" :style nil))
+(set-face-attribute
+ 'tabbar-unselected nil
+ :background "gray30"
+ :foreground "white"
+ :box '(:line-width 5 :color "gray30" :style nil))
+(set-face-attribute
+ 'tabbar-selected nil
+ :background "gray75"
+ :foreground "black"
+ :box '(:line-width 5 :color "gray75" :style nil))
+(set-face-attribute
+ 'tabbar-highlight nil
+ :background "white"
+ :foreground "black"
+ :underline nil
+ :box '(:line-width 5 :color "white" :style nil))
+(set-face-attribute
+ 'tabbar-button nil
+ :box '(:line-width 1 :color "gray20" :style nil))
+(set-face-attribute
+ 'tabbar-separator nil
+ :background "gray20"
+ :height 0.6)
+
+;; Change padding of the tabs
+;; we also need to set separator to avoid overlapping tabs by highlighted tabs
+(custom-set-variables
+ '(tabbar-separator (quote (0.5))))
+;; adding spaces
+(defun tabbar-buffer-tab-label (tab)
+  "Return a label for TAB.
+That is, a string used to represent it on the tab bar."
+  (let ((label  (if tabbar--buffer-show-groups
+                    (format "[%s]  " (tabbar-tab-tabset tab))
+                  (format "%s  " (tabbar-tab-value tab)))))
+    ;; Unless the tab bar auto scrolls to keep the selected tab
+    ;; visible, shorten the tab label to keep as many tabs as possible
+    ;; in the visible area of the tab bar.
+    (if tabbar-auto-scroll-flag
+        label
+      (tabbar-shorten
+       label (max 1 (/ (window-width)
+                       (length (tabbar-view
+                                (tabbar-current-tabset)))))))))
+;; Tabbar
+;; (require 'tabbar)
+;; ;; Tabbar settings
+;; (set-face-attribute
+;;  'tabbar-default nil
+;;  :background "gray20"
+;;  :foreground "gray20"
+;;  :box '(:line-width 1 :color "gray20" :style nil))
+;; (set-face-attribute
+;;  'tabbar-unselected nil
+;;  :background "gray30"
+;;  :foreground "white"
+;;  :box '(:line-width 5 :color "gray30" :style nil))
+;; (set-face-attribute
+;;  'tabbar-selected nil
+;;  :background "gray75"
+;;  :foreground "black"
+;;  :box '(:line-width 5 :color "gray75" :style nil))
+;; (set-face-attribute
+;;  'tabbar-highlight nil
+;;  :background "white"
+;;  :foreground "black"
+;;  :underline nil
+;;  :box '(:line-width 5 :color "white" :style nil))
+;; (set-face-attribute
+;;  'tabbar-button nil
+;;  :box '(:line-width 1 :color "gray20" :style nil))
+;; (set-face-attribute
+;;  'tabbar-separator nil
+;;  :background "gray20"
+;;  :height 0.6)
+
+;; ;; Change padding of the tabs
+;; ;; we also need to set separator to avoid overlapping tabs by highlighted tabs
+;; (custom-set-variables
+;;  '(tabbar-separator (quote (0.5))))
+;; ;; adding spaces
+;; (defun tabbar-buffer-tab-label (tab)
+;;   "Return a label for TAB.
+;; That is, a string used to represent it on the tab bar."
+;;   (let ((label  (if tabbar--buffer-show-groups
+;;                     (format "[%s]  " (tabbar-tab-tabset tab))
+;;                   (format "%s  " (tabbar-tab-value tab)))))
+;;     ;; Unless the tab bar auto scrolls to keep the selected tab
+;;     ;; visible, shorten the tab label to keep as many tabs as possible
+;;     ;; in the visible area of the tab bar.
+;;     (if tabbar-auto-scroll-flag
+;;         label
+;;       (tabbar-shorten
+;;        label (max 1 (/ (window-width)
+;;                        (length (tabbar-view
+;;                                 (tabbar-current-tabset)))))))))
+
+
+;; (tabbar-mode 1)
+(require 'tabbar)
+(setq tabbar-use-images nil)
+(tabbar-mode t)
+(setq tabbar-cycle-scope 'tabs)
+(setq tabbar-buffer-groups-function
+          (lambda ()
+            (list "All")))
+
+;; (setq tabbar-buffer-groups-function
+;;       (lambda ()
+;; 	(let ((dir (expand-file-name default-directory)))
+;; 	  (cond ((member (buffer-name) '("*Completions*"
+;; 					 "*scratch*"
+;; 					 "*Messages*"
+;; 					 "*Ediff Registry*"))
+;; 		 (list "#misc"))
+;; 		((string-match-p "/.emacs.d/" dir)
+;; 		 (list ".emacs.d"))
+;; 		(t (list dir))))))
+(global-set-key [C-prior] 'tabbar-backward-tab)
+(global-set-key [C-next] 'tabbar-forward-tab)
