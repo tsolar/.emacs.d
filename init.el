@@ -93,7 +93,18 @@ With negative N, comment out original line and use the absolute value."
 ;; full name in title
 (setq frame-title-format
       (list (format "%s %%S: %%j " (system-name))
-        '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+            '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
+
+;; full path in modeline
+;; (setq-default mode-line-buffer-identification
+;;               (list 'buffer-file-name
+;;                     (propertized-buffer-identification "%12f")
+;;                     (propertized-buffer-identification "%12b")
+;;                     ))
+
+;;(setq sml/theme 'powerline)
+(setq sml/no-confirm-load-theme t)
+(sml/setup)
 
 ;; helm keybindings
 
@@ -165,7 +176,7 @@ With negative N, comment out original line and use the absolute value."
  '(custom-enabled-themes (quote (railscasts)))
  '(custom-safe-themes
    (quote
-    ("3b0a350918ee819dca209cec62d867678d7dac74f6195f5e3799aa206358a983" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" "405b0ac2ac4667c5dab77b36e3dd87a603ea4717914e30fcf334983f79cfd87e" default)))
+    ("79a3f477ac0cb4a106f78b6109614e991564a5c2467c36e6e854d4bc1102e178" "3b0a350918ee819dca209cec62d867678d7dac74f6195f5e3799aa206358a983" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" "405b0ac2ac4667c5dab77b36e3dd87a603ea4717914e30fcf334983f79cfd87e" default)))
  '(delete-selection-mode t)
  '(display-battery-mode t)
  '(display-time-mode t)
@@ -191,13 +202,12 @@ With negative N, comment out original line and use the absolute value."
  '(global-diff-hl-mode t)
  '(global-hl-line-mode t)
  '(global-hl-line-sticky-flag nil)
- ;'(global-linum-mode t)
  '(global-subword-mode t)
  '(gtags-auto-update nil t)
  '(haml-backspace-backdents-nesting nil)
  '(haml-indent-offset 4)
- '(helm-mode-fuzzy-match t)
  '(helm-autoresize-mode t)
+ '(helm-mode-fuzzy-match t)
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-symbol-colors
    (--map
@@ -266,6 +276,69 @@ With negative N, comment out original line and use the absolute value."
  '(size-indication-mode t)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
  '(sml-modeline-mode t)
+ '(sml/mode-width
+   (if
+       (eq powerline-default-separator
+           (quote arrow))
+       (quote right)
+     (quote full)))
+ '(sml/pos-id-separator
+   (quote
+    (""
+     (:propertize " " face powerline-active1)
+     (:eval
+      (propertize " "
+                  (quote display)
+                  (funcall
+                   (intern
+                    (format "powerline-%s-%s" powerline-default-separator
+                            (car powerline-default-separator-dir)))
+                   (quote powerline-active1)
+                   (quote powerline-active2))))
+     (:propertize " " face powerline-active2))))
+ '(sml/pos-minor-modes-separator
+   (quote
+    (""
+     (:propertize " " face powerline-active1)
+     (:eval
+      (propertize " "
+                  (quote display)
+                  (funcall
+                   (intern
+                    (format "powerline-%s-%s" powerline-default-separator
+                            (cdr powerline-default-separator-dir)))
+                   (quote powerline-active1)
+                   nil)))
+     (:propertize " " face sml/global))))
+ '(sml/pre-id-separator
+   (quote
+    (""
+     (:propertize " " face sml/global)
+     (:eval
+      (propertize " "
+                  (quote display)
+                  (funcall
+                   (intern
+                    (format "powerline-%s-%s" powerline-default-separator
+                            (car powerline-default-separator-dir)))
+                   nil
+                   (quote powerline-active1))))
+     (:propertize " " face powerline-active1))))
+ '(sml/pre-minor-modes-separator
+   (quote
+    (""
+     (:propertize " " face powerline-active2)
+     (:eval
+      (propertize " "
+                  (quote display)
+                  (funcall
+                   (intern
+                    (format "powerline-%s-%s" powerline-default-separator
+                            (cdr powerline-default-separator-dir)))
+                   (quote powerline-active2)
+                   (quote powerline-active1))))
+     (:propertize " " face powerline-active1))))
+ '(sml/pre-modes-separator (propertize " " (quote face) (quote sml/modes)))
  '(smtpmail-smtp-server "mail.gnuchile.cl")
  '(smtpmail-smtp-service 25)
  '(tab-always-indent t)
@@ -754,3 +827,5 @@ With negative N, comment out original line and use the absolute value."
 (require 'my-smartparents)
 (require 'my-tabbar)
 (require 'my-highlight-parentheses)
+
+(sml/apply-theme 'powerline)

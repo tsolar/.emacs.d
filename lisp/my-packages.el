@@ -115,7 +115,9 @@
         scss-mode
         seq
         slim-mode
-        smartparens
+        smart-mode-line
+	smart-mode-line-powerline-theme
+	smartparens
         solarized-theme
         ssh-config-mode
         syslog-mode
