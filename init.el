@@ -198,10 +198,7 @@ With negative N, comment out original line and use the absolute value."
  '(flymake-phpcs-standard "PSR2")
  '(flyspell-mode 1 t)
  '(git-state-modeline-decoration (quote git-state-decoration-small-dot))
- '(global-auto-highlight-symbol-mode t)
  '(global-diff-hl-mode t)
- '(global-hl-line-mode t)
- '(global-hl-line-sticky-flag nil)
  '(global-subword-mode t)
  '(gtags-auto-update nil t)
  '(haml-backspace-backdents-nesting nil)
@@ -209,11 +206,6 @@ With negative N, comment out original line and use the absolute value."
  '(helm-autoresize-mode t)
  '(helm-mode-fuzzy-match t)
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
- '(highlight-symbol-colors
-   (--map
-    (solarized-color-blend it "#fdf6e3" 0.25)
-    (quote
-     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
  '(highlight-symbol-foreground-color "#586e75")
  '(highlight-tail-colors
    (quote
@@ -339,6 +331,18 @@ With negative N, comment out original line and use the absolute value."
                    (quote powerline-active1))))
      (:propertize " " face powerline-active1))))
  '(sml/pre-modes-separator (propertize " " (quote face) (quote sml/modes)))
+ '(sml/replacer-regexp-list
+   (quote
+    (("^~/org/" ":Org:")
+     ("^~/\\.emacs\\.d/" ":ED:")
+     ("^/sudo:.*:" ":SU:")
+     ("^~/Documents/" ":Doc:")
+     ("^~/Dropbox/" ":DB:")
+     ("^:\\([^:]*\\):Documento?s/" ":\\1/Doc:")
+     ("^~/[Gg]it/" ":Git:")
+     ("^~/[Gg]it[Hh]ub/" ":Git:")
+     ("^~/[Gg]it\\([Hh]ub\\|\\)-?[Pp]rojects/" ":Git:"))))
+ '(sml/shorten-directory nil)
  '(smtpmail-smtp-server "mail.gnuchile.cl")
  '(smtpmail-smtp-service 25)
  '(tab-always-indent t)
@@ -408,7 +412,8 @@ With negative N, comment out original line and use the absolute value."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
- '(show-paren-match ((t (:background "gray14" :foreground "gold"))))
+ '(iedit-occurrence ((t (:background "gold" :foreground "black"))))
+ '(show-paren-match ((t (:background nil :foreground "gold" :bold t))))
  '(web-mode-block-face ((t nil)))
  '(web-mode-inlay-face ((t nil)))
  '(web-mode-part-face ((t nil))))
@@ -429,6 +434,14 @@ With negative N, comment out original line and use the absolute value."
 (load "flycheck")
 (load "tea-time")
 (load "iedit")
+
+(require 'popwin)
+(popwin-mode 1)
+(setq display-buffer-function 'popwin:display-buffer)
+(push '("\*[Hh]elm" :regexp t) popwin:special-display-config)
+
+
+;;(rainbow-identifiers-mode 1)
 
 ;;(require 'ido)
 ;;(ido-mode t)
@@ -528,6 +541,13 @@ With negative N, comment out original line and use the absolute value."
 (setq ag-highlight-search t)
 (setq ag-reuse-window t)
 
+;; highlight symbol
+(require 'highlight-symbol)
+(global-set-key [(control f3)] 'highlight-symbol)
+(global-set-key [f3] 'highlight-symbol-next)
+(global-set-key [(shift f3)] 'highlight-symbol-prev)
+(global-set-key [(meta f3)] 'highlight-symbol-query-replace)
+
 ;; stop annoying when autocompleting
 (ac-linum-workaround)
 
@@ -571,6 +591,7 @@ With negative N, comment out original line and use the absolute value."
       '(("php"    . "\\.phtml\\'")
         ("blade"  . "\\.blade\\.")
 	("php"  . "\\.php\\.")
+        ("jsx"  . "\\.js[x]?\\'")
 	)
 )
 
@@ -587,6 +608,7 @@ With negative N, comment out original line and use the absolute value."
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.blade\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
 
 (setq web-mode-markup-indent-offset 4)
 (setq web-mode-css-indent-offset 4)
@@ -825,7 +847,8 @@ With negative N, comment out original line and use the absolute value."
 
 (require 'my-emms)
 (require 'my-smartparents)
-(require 'my-tabbar)
+;(require 'my-tabbar)
 (require 'my-highlight-parentheses)
 
+(nyan-mode 1)
 (sml/apply-theme 'powerline)

@@ -1,6 +1,7 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
 			 ("elpa" . "http://tromey.com/elpa/")
-			 ("melpa" . "http://melpa.milkbox.net/packages/")
+			 ;("melpa" . "http://melpa.org/packages/")
+                         ("melpa-stable" . "http://stable.melpa.org/packages/")
 			 ("marmalade" . "http://marmalade-repo.org/packages/")
 			 ))
 
@@ -12,7 +13,6 @@
         ag
         async
         auto-complete
-        auto-highlight-symbol
         bash-completion
         color-theme
         color-theme-github
@@ -97,10 +97,12 @@
         mustard-theme
         neotree
         nginx-mode
+        nyan-mode
         php-auto-yasnippets
         php-mode
         pkg-info
         popup
+        popwin
         projectile
         projectile-rails
         railscasts-theme
