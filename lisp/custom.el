@@ -95,6 +95,7 @@
  '(php-template-compatibility nil)
  '(pos-tip-background-color "#eee8d5")
  '(pos-tip-foreground-color "#586e75")
+ '(powerline-default-separator (quote arrow))
  '(projectile-require-project-root nil)
  '(rainbow-x-colors-major-mode-list
    (quote
@@ -111,7 +112,6 @@
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
  '(show-trailing-whitespace t)
- '(size-indication-mode t)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
  '(smtpmail-smtp-server "mail.gnuchile.cl")
  '(smtpmail-smtp-service 25)
@@ -163,7 +163,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
+ '(helm-buffer-process ((t (:foreground "yellow"))))
  '(iedit-occurrence ((t (:background "gold" :foreground "black"))))
+ '(mode-line ((t (:box nil))))
+ '(mode-line-inactive ((t (:box nil))))
  '(show-paren-match ((t (:background nil :foreground "gold" :bold t))))
+ '(sml/global ((t (:inherit mode-line :foreground "gray50" :inverse-video nil))))
+ '(sml/line-number ((t (:inherit sml/global :foreground "White" :weight bold))))
  '(web-mode-inlay-face ((t nil)))
  '(web-mode-part-face ((t nil))))

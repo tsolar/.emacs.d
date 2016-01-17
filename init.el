@@ -1,5 +1,12 @@
 (setq debug-on-error t)
 
+(setq-default fill-column 80)
+
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(unless (display-graphic-p) (menu-bar-mode -1))
+
+
 (load "~/.emacs.d/lisp/my-packages.el")
 (require 'my-packages)
 
@@ -23,6 +30,7 @@
 (setq mouse-sel-retain-highlight t) ; Keep mouse high-lightening
 
 (setq stack-trace-on-error t)
+
 
 ;; stop annoying questions
 (setq-default abbrev-mode t)
@@ -145,8 +153,10 @@ With negative N, comment out original line and use the absolute value."
 (require 'my-web-mode)
 (require 'my-smartparents)
 (require 'my-highlight-parentheses)
+(require 'my-rainbow-delimiters)
 (require 'my-company)
 (require 'my-flymake)
+(require 'my-auto-complete)
 
 (require 'my-emms)
 ;(require 'my-tabbar)
@@ -206,10 +216,7 @@ With negative N, comment out original line and use the absolute value."
 (global-set-key [f8] 'neotree-toggle)
 
 
-(require 'auto-complete)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-(require 'auto-complete-config)
-(ac-config-default)
+
 
 (require 'php-auto-yasnippets)
 ;; (load "php-auto-yasnippets")
@@ -227,8 +234,6 @@ With negative N, comment out original line and use the absolute value."
 ;;(require 'hl-paren-mode)
 
 (require 'easy-repeat)
-
-
 
 ;;;;;;;;;;;;; modes loaded
 
