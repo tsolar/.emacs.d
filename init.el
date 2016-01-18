@@ -1,6 +1,5 @@
 (setq debug-on-error t)
-
-(setq-default fill-column 80)
+(setq debug-on-quit t)
 
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -12,6 +11,17 @@
 
 (setq custom-file "~/.emacs.d/lisp/custom.el")
 (load custom-file)
+
+
+(setq-default fill-column 80)
+
+;; use UTF8!
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
+
 
 ;; exec-path-from-shell
 (exec-path-from-shell-initialize)
@@ -62,6 +72,10 @@
 ;; cuando cambio de buffer me quedo en el buffer nuevo!
 (global-set-key "\C-x2" (lambda () (interactive)(split-window-vertically) (other-window 1)))
 (global-set-key "\C-x3" (lambda () (interactive)(split-window-horizontally) (other-window 1)))
+
+;; Split windows a bit better (don't split horizontally, I have a widescreen :P)
+(setq split-height-threshold nil)
+(setq split-width-threshold 180)
 
 ;; cycle through buffers
 (global-set-key (kbd "<C-tab>") 'bury-buffer)
@@ -408,6 +422,5 @@ With negative N, comment out original line and use the absolute value."
 ;;; end comment or uncoment...
 
 
-
-
-;(load-file (expand-file-name "custom/tabbar.el" user-emacs-directory))
+(setq debug-on-error nil)
+(setq debug-on-quit nil)
