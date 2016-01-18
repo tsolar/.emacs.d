@@ -62,5 +62,6 @@
                    (setq emmet-use-css-transform t)
                  (setq emmet-use-css-transform nil)))))
 
+(setq js-indent-level 2)
 
 (provide 'my-web-mode)
