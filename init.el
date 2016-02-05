@@ -208,6 +208,21 @@ With negative N, comment out original line and use the absolute value."
 (setq ido-enable-flex-matching t)
 (setq ido-use-faces nil)
 
+
+;; robe
+(add-hook 'ruby-mode-hook 'robe-mode)
+
+;; robe ac
+(add-hook 'robe-mode-hook 'ac-robe-setup)
+
+;;;; robe company
+;;(eval-after-load 'company
+;;  '(push 'company-robe company-backends))
+
+
+(defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+  (rvm-activate-corresponding-ruby))
+
 ;; Load rvm.el
 (require 'rvm)
 ;; use rvm’s default ruby for the current Emacs session
@@ -220,7 +235,6 @@ With negative N, comment out original line and use the absolute value."
 
 ;;(setq rinari-tags-file-name "TAGS")
 
-
 ;; (global-git-gutter+-mode)
 ;; (require 'git-gutter-fringe+)
 
@@ -228,9 +242,6 @@ With negative N, comment out original line and use the absolute value."
 
 (require 'neotree)
 (global-set-key [f8] 'neotree-toggle)
-
-
-
 
 (require 'php-auto-yasnippets)
 ;; (load "php-auto-yasnippets")
@@ -306,6 +317,10 @@ With negative N, comment out original line and use the absolute value."
 
 (eval-after-load 'css-mode
   '(define-key css-mode-map (kbd "C-c b") 'web-beautify-css))
+
+;; xlsx.axlsx views ruby mode
+
+(add-to-list 'auto-mode-alist '("\\.xlsx\\.axlsx\\'" . ruby-mode))
 
 
 ;; yaml
