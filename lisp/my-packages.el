@@ -94,6 +94,7 @@
         markdown-mode
         minimap
         move-text
+        multiple-cursors
         mustard-theme
         neotree
         nginx-mode

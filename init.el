@@ -172,6 +172,8 @@ With negative N, comment out original line and use the absolute value."
 (require 'my-flymake)
 (require 'my-auto-complete)
 
+(require 'my-multiple-cursors)
+
 (require 'my-emms)
 ;(require 'my-tabbar)
 
