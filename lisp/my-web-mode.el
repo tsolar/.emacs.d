@@ -24,12 +24,13 @@
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.blade\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
+;; (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . js3-mode))
 
-(setq web-mode-markup-indent-offset 4)
+(setq web-mode-markup-indent-offset 2)
 (setq web-mode-css-indent-offset 4)
 (setq web-mode-code-indent-offset 4)
-(setq web-mode-indent-style 4)
+(setq web-mode-indent-style 2)
 (set-face-attribute 'web-mode-css-at-rule-face nil :foreground "Pink3")
 ;;(define-key web-mode-map (kbd "C-n") 'web-mode-tag-match)
 (setq web-mode-disable-auto-pairing nil)
@@ -41,7 +42,7 @@
 (setq web-mode-enable-current-element-highlight t)
 (defun web-mode-hook ()
   "Hooks for Web mode."
-  (setq web-mode-markup-indent-offset 4)
+  (setq web-mode-markup-indent-offset 2)
   )
 (add-hook 'web-mode-hook 'web-mode-hook)
 
@@ -62,6 +63,13 @@
                    (setq emmet-use-css-transform t)
                  (setq emmet-use-css-transform nil)))))
 
-(setq js-indent-level 2)
+(defun js-mode-hook ()
+  "Hooks for Javascript mode."
+  ;(setq tab-width 2)
+  (setq js-indent-level 2)
+  )
+(add-hook 'js-mode-hook js-mode-hook)
+(add-hook 'js3-mode-hook js-mode-hook)
+(add-hook 'web-mode-hook js-mode-hook)
 
 (provide 'my-web-mode)
