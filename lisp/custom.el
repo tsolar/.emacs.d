@@ -22,6 +22,7 @@
    (quote
     ("79a3f477ac0cb4a106f78b6109614e991564a5c2467c36e6e854d4bc1102e178" "3b0a350918ee819dca209cec62d867678d7dac74f6195f5e3799aa206358a983" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "98a619757483dc6614c266107ab6b19d315f93267e535ec89b7af3d62fb83cad" "405b0ac2ac4667c5dab77b36e3dd87a603ea4717914e30fcf334983f79cfd87e" default)))
  '(delete-selection-mode t)
+ '(delete-trailing-lines nil)
  '(display-battery-mode t)
  '(display-time-mode t)
  '(ecb-options-version "2.40")
@@ -39,6 +40,7 @@
  '(erc-user-full-name "Tomás Solar")
  '(exec-path-from-shell-check-startup-files nil)
  '(fci-rule-color "#eee8d5")
+ '(ffap-require-prefix t)
  '(flymake-phpcs-location (quote tempdir))
  '(flymake-phpcs-standard "PSR2")
  '(flyspell-mode 1 t)
@@ -77,6 +79,7 @@
  '(ispell-list-command "--list")
  '(jabber-show-offline-contacts nil)
  '(jabber-show-resources nil)
+ '(js-indent-level 2)
  '(js2-auto-indent-p t)
  '(js2-bounce-indent-p t)
  '(js2-cleanup-whitespace t)
@@ -101,6 +104,7 @@
    (quote
     (emacs-lisp-mode lisp-interaction-mode c-mode c++-mode java-mode lua-mode html-helper-mode php-mode css-mode lisp-mode)))
  '(recentf-mode t)
+ '(require-final-newline t)
  '(safe-local-variable-values
    (quote
     ((encoding . utf-8)
