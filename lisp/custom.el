@@ -47,6 +47,7 @@
  '(flyspell-prog-mode 1 t)
  '(git-state-modeline-decoration (quote git-state-decoration-small-dot))
  '(global-diff-hl-mode t)
+ '(global-hl-line-mode t)
  '(global-subword-mode t)
  '(gtags-auto-update nil t)
  '(haml-backspace-backdents-nesting nil)
