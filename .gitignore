@@ -45,3 +45,5 @@ tramp
 
 # cask packages
 .cask/
+/.hl-save
+/lisp/custom-bkp.el
