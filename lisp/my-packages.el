@@ -14,6 +14,7 @@
         async
         auto-complete
         bash-completion
+        coffee-mode
         color-theme
         color-theme-github
         company
