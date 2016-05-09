@@ -145,7 +145,7 @@ With negative N, comment out original line and use the absolute value."
 (setq x-select-enable-clipboard t)
 
 ;; after mouse selection in X11, you can paste by `yank' in emacs
-(setq x-select-enable-primary t)
+(setq x-select-enable-primary nil)
 
 (setq tramp-auto-save-directory "~/tmp/emacs-auto-save")
 
