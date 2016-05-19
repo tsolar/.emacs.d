@@ -113,6 +113,7 @@
         rainbow-mode
         rake
         rinari
+        robe
         ruby-compilation
         rvm
         s
