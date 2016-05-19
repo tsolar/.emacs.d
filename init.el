@@ -162,6 +162,7 @@ With negative N, comment out original line and use the absolute value."
 ;(package-initialize)
 
 ;; load my setup
+(require 'my-hideshow)
 (require 'my-helm)
 (require 'my-projectile)
 (require 'my-web-mode)
