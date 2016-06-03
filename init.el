@@ -166,6 +166,7 @@ With negative N, comment out original line and use the absolute value."
 (require 'my-helm)
 (require 'my-projectile)
 (require 'my-web-mode)
+(require 'my-emmet)
 (require 'my-smartparents)
 (require 'my-highlight-parentheses)
 (require 'my-rainbow-delimiters)
@@ -251,10 +252,6 @@ With negative N, comment out original line and use the absolute value."
 (define-key php-mode-map (kbd "C-c C-y") 'yas/create-php-snippet)
 (payas/ac-setup)
 
-(require 'emmet-mode)
-(require 'ac-emmet)
-(add-hook 'sgml-mode-hook 'ac-emmet-html-setup)
-(add-hook 'css-mode-hook 'ac-emmet-css-setup)
 
 (require 'notifications)
 
