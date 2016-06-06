@@ -53,6 +53,8 @@
  '(gtags-auto-update nil t)
  '(haml-backspace-backdents-nesting nil)
  '(haml-indent-offset 4)
+ '(helm-ag-fuzzy-match t)
+ '(helm-ag-use-temp-buffer t)
  '(helm-autoresize-mode t)
  '(helm-mode-fuzzy-match t)
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
@@ -102,7 +104,7 @@
  '(php-template-compatibility nil)
  '(pos-tip-background-color "#eee8d5")
  '(pos-tip-foreground-color "#586e75")
- '(powerline-default-separator (quote arrow))
+ ;'(powerline-default-separator (quote arrow))
  '(projectile-require-project-root nil)
  '(rainbow-x-colors-major-mode-list
    (quote
@@ -122,6 +124,7 @@
  '(show-paren-style (quote mixed))
  '(show-trailing-whitespace t)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
+ '(sml/pre-modes-separator (propertize " " (quote face) (quote sml/modes)))
  '(smtpmail-smtp-server "mail.gnuchile.cl")
  '(smtpmail-smtp-service 25)
  '(tab-always-indent t)
