@@ -1,3 +1,14 @@
+(use-package helm-projectile
+  :after helm
+  :bind
+  (:map projectile-command-map
+        ("b" . helm-projectile-switch-to-buffer)
+        ("d" . helm-projectile-find-dir)
+        ("f" . helm-projectile-find-file)
+        ("p" . helm-projectile-switch-project)
+        ("s s" . helm-projectile-ag))
+  :config (helm-projectile-toggle 1))
+
 (require 'helm-config)
 (helm-mode 1)
 

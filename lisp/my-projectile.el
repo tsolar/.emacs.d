@@ -8,4 +8,6 @@
 
 (add-hook 'projectile-mode-hook 'projectile-rails-on)
 
+(setq projectile-find-dir-includes-top-level t)
+
 (provide 'my-projectile)

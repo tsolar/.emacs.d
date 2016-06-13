@@ -130,6 +130,7 @@
         tea-time
         twittering-mode
         undo-tree
+        use-package
         vcl-mode
         web-beautify
         web-completion-data
