@@ -191,7 +191,7 @@ With negative N, comment out original line and use the absolute value."
 (require 'popwin)
 (popwin-mode 1)
 (setq display-buffer-function 'popwin:display-buffer)
-(push '("\*[Hh]elm" :regexp t) popwin:special-display-config)
+(push '("*[Hh]elm*") popwin:special-display-config)
 
 
 ;;(rainbow-identifiers-mode 1)
