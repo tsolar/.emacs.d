@@ -161,6 +161,14 @@ With negative N, comment out original line and use the absolute value."
 (require 'package)
 ;(package-initialize)
 
+;; load required packages
+(load "lua-mode")
+;;(load "php-mode")
+(load "rainbow-mode")
+(load "flycheck")
+(load "tea-time")
+(load "iedit")
+
 ;; load my setup
 (require 'my-hideshow)
 (require 'my-helm)
@@ -180,13 +188,6 @@ With negative N, comment out original line and use the absolute value."
 ;(require 'my-tabbar)
 
 (require 'my-sml)
-
-(load "lua-mode")
-;;(load "php-mode")
-(load "rainbow-mode")
-(load "flycheck")
-(load "tea-time")
-(load "iedit")
 
 (require 'popwin)
 (popwin-mode 1)
