@@ -189,6 +189,7 @@ With negative N, comment out original line and use the absolute value."
 
 (require 'my-sml)
 
+(require 'my-aggressive-indent)
 (require 'popwin)
 (popwin-mode 1)
 (setq display-buffer-function 'popwin:display-buffer)

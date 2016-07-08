@@ -11,6 +11,7 @@
       '(
         ac-emmet
         ag
+        aggressive-indent
         async
         auto-complete
         bash-completion
