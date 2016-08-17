@@ -3,6 +3,8 @@
 (add-hook 'text-mode-hook #'projectile-mode)
 (add-hook 'prog-mode-hook #'projectile-mode)
 (add-hook 'magit-mode-hook #'projectile-mode)
+(add-hook 'css-mode-hook #'projectile-mode)
+(add-hook 'yaml-mode-hook #'projectile-mode)
 (add-hook 'gitignore-mode-hook #'projectile-mode)
 
 
