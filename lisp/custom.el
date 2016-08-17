@@ -12,6 +12,7 @@
  '(column-number-mode t)
  '(company-auto-complete (quote (quote company-explicit-action-p)))
  '(compilation-message-face (quote default))
+ '(css-indent-offset 2)
  '(cua-global-mark-cursor-color "#2aa198")
  '(cua-mode t nil (cua-base))
  '(cua-normal-cursor-color "#657b83")
@@ -54,6 +55,7 @@
  '(haml-backspace-backdents-nesting nil)
  '(haml-indent-offset 4)
  '(helm-ag-fuzzy-match t)
+ '(helm-ag-use-agignore t)
  '(helm-ag-use-temp-buffer t)
  '(helm-autoresize-mode t)
  '(helm-mode-fuzzy-match t)
@@ -104,7 +106,6 @@
  '(php-template-compatibility nil)
  '(pos-tip-background-color "#eee8d5")
  '(pos-tip-foreground-color "#586e75")
- ;'(powerline-default-separator (quote arrow))
  '(projectile-require-project-root nil)
  '(rainbow-x-colors-major-mode-list
    (quote

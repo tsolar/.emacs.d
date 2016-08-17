@@ -112,7 +112,6 @@ With negative N, comment out original line and use the absolute value."
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
-
 ;;(setq gtags-auto-update nil) ;; drupal fix/workaround?
 
 ;; full name in title
@@ -214,6 +213,19 @@ With negative N, comment out original line and use the absolute value."
 (setq ido-enable-flex-matching t)
 (setq ido-use-faces nil)
 
+;; (use-package magit-gh-pulls
+;;   :ensure magit
+;;   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
+;;   )
+
+
+;; Load rvm.el
+(require 'rvm)
+;; use rvm’s default ruby for the current Emacs session
+(rvm-use-default)
+
+(defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+  (rvm-activate-corresponding-ruby))
 
 ;; robe
 (add-hook 'ruby-mode-hook 'robe-mode)
@@ -225,14 +237,6 @@ With negative N, comment out original line and use the absolute value."
 ;;(eval-after-load 'company
 ;;  '(push 'company-robe company-backends))
 
-
-(defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-  (rvm-activate-corresponding-ruby))
-
-;; Load rvm.el
-(require 'rvm)
-;; use rvm’s default ruby for the current Emacs session
-(rvm-use-default)
 
 ;; rails rinari-mode
 ;;(require 'rinari)
