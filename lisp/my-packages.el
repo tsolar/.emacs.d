@@ -1,9 +1,19 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
 			 ("elpa" . "http://tromey.com/elpa/")
 			 ("melpa" . "http://melpa.org/packages/")
-                         ("melpa-stable" . "http://stable.melpa.org/packages/")
+                         ;("melpa-stable" . "http://stable.melpa.org/packages/")
 			 ("marmalade" . "http://marmalade-repo.org/packages/")
 			 ))
+
+(setq package-archive-priorities
+      '(
+        ("melpa" . 30)
+	;("melpa-stable" . 20)
+        ("marmalade" . 10)
+        ("gnu" . 10)
+	("elpa" . 0)
+	)
+      )
 
 ;; list the packages you want
 ;; with C-h v package-activated-list

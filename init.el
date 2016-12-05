@@ -52,24 +52,7 @@
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; mover línea hacia arriba
-(defun move-line-up ()
-  (interactive)
-  (transpose-lines 1)
-  (forward-line -2))
-
-;; mover línea hacia abajo
-(defun move-line-down ()
-  (interactive)
-  (forward-line 1)
-  (transpose-lines 1)
-  (forward-line -1))
-
-
-(global-set-key (kbd "S-M-<up>") 'move-text-up)
-(global-set-key (kbd "S-M-<down>") 'move-text-down)
-
-;; cuando cambio de buffer me quedo en el buffer nuevo!
+;; ;; cuando cambio de buffer me quedo en el buffer nuevo!
 (global-set-key "\C-x2" (lambda () (interactive)(split-window-vertically) (other-window 1)))
 (global-set-key "\C-x3" (lambda () (interactive)(split-window-horizontally) (other-window 1)))
 
@@ -167,6 +150,7 @@ With negative N, comment out original line and use the absolute value."
 (load "flycheck")
 (load "tea-time")
 (load "iedit")
+(load "scss-mode")
 
 ;; load my setup
 (require 'my-hideshow)
@@ -194,6 +178,8 @@ With negative N, comment out original line and use the absolute value."
 (setq display-buffer-function 'popwin:display-buffer)
 (push '("*[Hh]elm*") popwin:special-display-config)
 
+;; move text up and down!
+(move-text-default-bindings)
 
 ;;(rainbow-identifiers-mode 1)
 
@@ -232,6 +218,9 @@ With negative N, comment out original line and use the absolute value."
 
 ;; robe ac
 (add-hook 'robe-mode-hook 'ac-robe-setup)
+
+;; capistrano files
+(add-to-list 'auto-mode-alist '("\\.cap\\'" . ruby-mode))
 
 ;;;; robe company
 ;;(eval-after-load 'company
