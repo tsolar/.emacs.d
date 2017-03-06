@@ -102,7 +102,7 @@
  '(nyan-wavy-trail t)
  '(package-selected-packages
    (quote
-    (yaml-mode web-mode web-beautify vcl-mode use-package undo-tree twittering-mode tea-time syslog-mode ssh-config-mode solarized-theme smartparens smart-mode-line-powerline-theme smart-mode-line slim-mode scss-mode sass-mode rvm robe rinari rainbow-mode rainbow-delimiters railscasts-theme projectile-rails popwin php-auto-yasnippets nyan-mode nginx-mode neotree mustard-theme multiple-cursors move-text minimap markdown-mode magit lua-mode jump json-mode js3-mode inf-ruby iedit hl-anything highlight-symbol highlight-parentheses highlight-indentation hide-lines helm-rhythmbox helm-rails helm-projectile helm-ls-git helm-fuzzier helm-emmet helm-company helm-ag helm haml-mode gitignore-mode github-theme git-gutter-fringe+ git-gutter+ git-commit fringe-helper flymake-yaml flymake-shell flymake-sass flymake-ruby flymake-python-pyflakes flymake-phpcs flymake-php flymake-lua flymake-less flymake-json flymake-jslint flymake-jshint flymake-hlint flymake-haml flymake-gjshint flymake-cursor flymake-css flylisp flycheck-tip flycheck-pyflakes flycheck flx-ido flx findr f exec-path-from-shell epl emms-info-mediainfo emms elscreen ecb easy-repeat drupal-mode diff-hl darktooth-theme csv-mode company-web company color-theme-github color-theme coffee-mode bash-completion async aggressive-indent ag ac-emmet)))
+    (yasnippet yaml-mode web-mode web-beautify vcl-mode use-package undo-tree twittering-mode tea-time syslog-mode ssh-config-mode solarized-theme smartparens smart-mode-line-powerline-theme smart-mode-line slim-mode scss-mode sass-mode rvm robe rinari rainbow-mode rainbow-delimiters railscasts-theme projectile-rails popwin php-auto-yasnippets nyan-mode nginx-mode neotree mustard-theme multiple-cursors move-text minimap markdown-mode magit lua-mode jump json-mode js3-mode inf-ruby iedit hl-anything highlight-symbol highlight-parentheses highlight-indentation hide-lines helm-rhythmbox helm-rails helm-projectile helm-ls-git helm-fuzzier helm-emmet helm-company helm-ag helm haml-mode gitignore-mode github-theme git-gutter-fringe+ git-gutter+ git-commit fringe-helper flymake-yaml flymake-shell flymake-sass flymake-ruby flymake-python-pyflakes flymake-phpcs flymake-php flymake-lua flymake-less flymake-json flymake-jslint flymake-jshint flymake-hlint flymake-haml flymake-gjshint flymake-cursor flymake-css flylisp flycheck-tip flycheck-pyflakes flycheck flx-ido flx findr f exec-path-from-shell epl emms-info-mediainfo emms elscreen ecb easy-repeat diff-hl darktooth-theme csv-mode company-web company color-theme-github color-theme coffee-mode bash-completion async aggressive-indent ag ac-emmet)))
  '(password-cache-expiry nil)
  '(php-lineup-cascaded-calls t)
  '(php-mode-coding-style (quote pear))
@@ -164,7 +164,7 @@
      (360 . "#268bd2"))))
  '(vc-annotate-very-old-color nil)
  '(web-mode-enable-current-column-highlight t)
- '(web-mode-enable-part-face nil)
+ '(web-mode-enable-part-face nil t)
  '(weechat-color-list
    (quote
     (unspecified "#fdf6e3" "#eee8d5" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#657b83" "#839496")))
@@ -181,6 +181,6 @@
  '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
  '(helm-buffer-process ((t (:foreground "yellow"))))
  '(iedit-occurrence ((t (:background "gold" :foreground "black"))))
- '(show-paren-match ((t (:background nil :foreground "gold" :bold t))))
+ '(show-paren-match ((t (:background nil :foreground "gold" :weight bold))))
  '(web-mode-inlay-face ((t nil)))
  '(web-mode-part-face ((t nil))))
