@@ -32,7 +32,6 @@
  '(erc-speedbar-sort-users-type (quote alphabetical))
  '(erc-user-full-name "Tomás Solar")
  '(exec-path-from-shell-check-startup-files nil)
- '(fci-rule-color "#eee8d5")
  '(ffap-require-prefix t)
  '(flymake-phpcs-location (quote tempdir))
  '(flymake-phpcs-standard "PSR2")
@@ -110,14 +109,16 @@
  '(vc-annotate-very-old-color nil)
  '(web-mode-enable-current-column-highlight t)
  '(web-mode-enable-part-face nil t)
- '(which-function-mode t)
+ '(which-function-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
+ '(git-commit-summary ((t (:inherit font-lock-constant-face))))
  '(helm-buffer-process ((t (:foreground "yellow"))))
+ '(highlight ((t (:weight bold))))
  '(iedit-occurrence ((t (:background "gold" :foreground "black"))))
  '(show-paren-match ((t (:background nil :foreground "gold" :weight bold))))
  '(web-mode-inlay-face ((t nil)))
