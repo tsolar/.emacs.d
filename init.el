@@ -300,15 +300,19 @@
   (move-text-default-bindings))
 
 (use-package ssh-config-mode
-  :ensure t)
+  :ensure t
+  :config
+  (progn
+    (add-to-list 'auto-mode-alist '(".ssh/config\\'"  . ssh-config-mode))
+    (add-to-list 'auto-mode-alist '("sshd?_config\\'" . ssh-config-mode))
+    (add-hook 'ssh-config-mode-hook 'turn-on-font-lock)))
 
 (use-package nginx-mode
   :ensure t
   :config
-  (add-to-list 'auto-mode-alist '(".ssh/config\\'"  . ssh-config-mode))
-  (add-to-list 'auto-mode-alist '("sshd?_config\\'" . ssh-config-mode))
-  (add-hook 'ssh-config-mode-hook 'turn-on-font-lock)
-  )
+  (progn
+    (add-to-list 'auto-mode-alist '("/etc/nginx/nginx.conf\\'" . nginx-mode))
+    (add-to-list 'auto-mode-alist '("/etc/nginx/sites-\\(enabled\\|available\\)/.*\\'" . nginx-mode))))
 
 (use-package markdown-mode
   :ensure t
