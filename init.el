@@ -366,7 +366,7 @@
 (use-package rainbow-mode
   :diminish (rainbow-mode . "")
   :config
-  (add-hook 'prog-mode-hook 'rainbow-mode))
+  (add-hook 'css-mode-hook 'rainbow-mode))
 
 (use-package iedit
   :ensure t)
