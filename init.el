@@ -371,6 +371,17 @@
 (use-package iedit
   :ensure t)
 
+(use-package popwin
+  :ensure t
+  :config
+  (progn
+    (popwin-mode)
+    (setq popwin:popup-window-height 30)
+    (push '("*" :regexp t :height 30) popwin:special-display-config)
+    (push '("*helm" :regexp t :height 30) popwin:special-display-config)
+    (push '("*compilation" :regexp t :height 50) popwin:special-display-config)
+    (push '("*Bundler" :regexp t :height 50) popwin:special-display-config)))
+
 (use-package smart-mode-line
   :ensure smart-mode-line
   :init
