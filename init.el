@@ -330,6 +330,7 @@
   :mode "\\.vcl\\'")
 
 (use-package yaml-mode
+  :ensure t
   :mode "\\.yml$")
 
 (use-package linum
@@ -375,17 +376,6 @@
 (use-package iedit
   :ensure t)
 
-(use-package popwin
-  :ensure t
-  :config
-  (progn
-    (popwin-mode)
-    (setq popwin:popup-window-height 30)
-    (push '("*" :regexp t :height 30) popwin:special-display-config)
-    (push '("*helm" :regexp t :height 30) popwin:special-display-config)
-    (push '("*compilation" :regexp t :height 50) popwin:special-display-config)
-    (push '("*Bundler" :regexp t :height 50) popwin:special-display-config)))
-
 (use-package smart-mode-line
   :ensure smart-mode-line
   :init
@@ -416,8 +406,6 @@
     )
   :config
   (ac-linum-workaround)
-  (define-key ac-completing-map "\t" 'ac-complete)
-  (define-key ac-completing-map "\r" nil)
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
   (add-hook 'ruby-mode-hook
             (lambda ()
