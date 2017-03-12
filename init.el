@@ -108,20 +108,28 @@
 
   )
 
-(use-package inf-ruby
-  :ensure t
-  :config
-  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
-
 (use-package ruby-mode
   :config
   (progn
     (add-to-list 'auto-mode-alist '("\\.xlsx\\.axlsx\\'" . ruby-mode))
+    ;; -- GODAMMIT RUBY INDENTATION!!! --
+    ;; don't indent parenthesis in a weird way
+    (setq ruby-align-chained-calls nil
+          ruby-align-to-stmt-keywords nil
+          ruby-deep-indent-paren nil
+          ruby-deep-indent-paren-style nil
+          ruby-use-smie nil)
+
     (use-package rvm
       :ensure t
       :init (rvm-use-default)
       :config (setq rvm-verbose nil)
       (add-hook 'ruby-mode-hook #'subword-mode))
+
+    (use-package yard-mode
+      :ensure t
+      :config
+      (add-hook 'ruby-mode-hook 'yard-mode))
 
     (use-package robe
       :ensure t
@@ -130,7 +138,29 @@
       (add-hook 'robe-mode-hook 'ac-robe-setup))
     (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
       (rvm-activate-corresponding-ruby))
+    (defadvice ruby-indent-line (after unindent-closing-paren activate)
+      "Indent sole parenthesis in loca's way."
+      (let ((column (current-column))
+            indent offset)
+        (save-excursion
+          (back-to-indentation)
+          (let ((state (syntax-ppss)))
+            (setq offset (- column (current-column)))
+            (when (and (eq (char-after) ?\))
+                       (not (zerop (car state))))
+              (goto-char (cadr state))
+              (setq indent (current-indentation)))))
+        (when indent
+          (indent-line-to indent)
+          (when (> offset 0) (forward-char offset)))))
+
     ))
+
+(use-package inf-ruby
+  :ensure t
+  :after ruby-mode
+  :config
+  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
 
 (use-package php-mode
   :ensure t
@@ -206,6 +236,8 @@
   :ensure t
   :after helm
   :init
+  (setq projectile-completion-system 'helm
+        projectile-find-dir-includes-top-level t)
   :config
   (add-hook 'text-mode-hook #'projectile-mode)
   (add-hook 'prog-mode-hook #'projectile-mode)
@@ -213,8 +245,6 @@
   (add-hook 'css-mode-hook #'projectile-mode)
   (add-hook 'yaml-mode-hook #'projectile-mode)
   (add-hook 'gitignore-mode-hook #'projectile-mode)
-  (setq projectile-completion-system 'helm
-        projectile-find-dir-includes-top-level t)
   (helm-projectile-toggle 1))
 
 (use-package projectile-rails
