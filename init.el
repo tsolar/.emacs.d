@@ -60,6 +60,16 @@
   :ensure t
   :bind (("C-x g" . magit-status)))
 
+(use-package diff-hl
+  :ensure t
+  :config
+  (global-diff-hl-mode)
+  (diff-hl-flydiff-mode)
+  ;; (diff-hl-margin-mode)
+  (diff-hl-dired-mode)
+  ;; using magit 2.4 or newer
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+
 (use-package rainbow-mode
   :ensure t
   :config
@@ -215,9 +225,13 @@
                  :config
                  (helm-fuzzier-mode 1))
 
-               (when (executable-find "ack-grep")
-                 (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
-                       helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
+               ;; (when (executable-find "ack-grep")
+               ;;   (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
+               ;;         helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
+               ;; use silver searcher when available
+               (when (executable-find "ag-grep")
+                 (setq helm-grep-default-command "ag-grep -Hn --no-group --no-color %e %p %f"
+                       helm-grep-default-recurse-command "ag-grep -H --no-group --no-color %e %p %f"))
                (bind-key "C-c C-SPC" 'helm-ff-run-toggle-auto-update helm-find-files-map))
 
   :bind (("C-x r l" . helm-bookmarks)

@@ -34,6 +34,7 @@
  '(flymake-phpcs-standard "PSR2")
  '(flyspell-issue-message-flag nil)
  '(flyspell-prog-mode 1 t)
+ '(fringe-mode (quote (1 . 1)) nil (fringe))
  '(git-state-modeline-decoration (quote git-state-decoration-small-dot))
  '(global-diff-hl-mode t)
  '(global-hl-line-mode t)
