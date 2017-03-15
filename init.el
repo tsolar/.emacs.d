@@ -403,11 +403,6 @@
   :config
   (global-undo-tree-mode 1))
 
-(use-package rainbow-mode
-  :diminish (rainbow-mode . "")
-  :config
-  (add-hook 'css-mode-hook 'rainbow-mode))
-
 (use-package iedit
   :ensure t)
 
