@@ -181,6 +181,23 @@
                                             comment-style 'indent
                                             comment-use-syntax t
                                             ))))
+;; projectile
+(use-package projectile
+  :diminish projectile-mode
+  :config
+  (setq projectile-enable-caching t
+        projectile-completion-system 'helm
+        projectile-find-dir-includes-top-level t
+        projectile-switch-project-action 'helm-projectile)
+  ;; (projectile-global-mode)
+  (add-hook 'text-mode-hook #'projectile-mode)
+  (add-hook 'prog-mode-hook #'projectile-mode)
+  (add-hook 'magit-mode-hook #'projectile-mode)
+  (add-hook 'css-mode-hook #'projectile-mode)
+  (add-hook 'yaml-mode-hook #'projectile-mode)
+  (add-hook 'gitignore-mode-hook #'projectile-mode)
+
+  )
 
 (use-package helm
   :ensure    helm
@@ -249,17 +266,15 @@
 (use-package helm-projectile
   :ensure t
   :after helm
-  :init
-  (setq projectile-completion-system 'helm
-        projectile-find-dir-includes-top-level t)
+  :commands (helm-projectile)
   :config
-  (add-hook 'text-mode-hook #'projectile-mode)
-  (add-hook 'prog-mode-hook #'projectile-mode)
-  (add-hook 'magit-mode-hook #'projectile-mode)
-  (add-hook 'css-mode-hook #'projectile-mode)
-  (add-hook 'yaml-mode-hook #'projectile-mode)
-  (add-hook 'gitignore-mode-hook #'projectile-mode)
-  (helm-projectile-toggle 1))
+  (setq projectile-completion-system 'helm)
+  (setq projectile-find-dir-includes-top-level t)
+  (helm-projectile-on)
+  ;; (helm-projectile-toggle 1)
+  )
+
+
 
 (use-package projectile-rails
   :ensure t
