@@ -185,7 +185,7 @@
 (use-package projectile
   :diminish projectile-mode
   :config
-  (setq projectile-enable-caching t
+  (setq projectile-enable-caching nil
         projectile-completion-system 'helm
         projectile-find-dir-includes-top-level t
         projectile-switch-project-action 'helm-projectile)
