@@ -364,6 +364,14 @@
     (add-to-list 'auto-mode-alist '("/etc/nginx/nginx.conf\\'" . nginx-mode))
     (add-to-list 'auto-mode-alist '("/etc/nginx/sites-\\(enabled\\|available\\)/.*\\'" . nginx-mode))))
 
+(use-package docker
+  :ensure t
+  :commands docker-mode)
+
+(use-package dockerfile-mode
+  :ensure t
+  :mode "Dockerfile.*\\'")
+
 (use-package markdown-mode
   :ensure t
   :config
