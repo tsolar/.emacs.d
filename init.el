@@ -51,7 +51,7 @@
   (setq ido-enable-prefix nil
         ido-enable-flex-matching t
         ido-create-new-buffer 'always
-        ido-use-filename-at-point 'guess
+        ido-use-filename-at-point t ;; 'guess
         ido-default-file-method 'selected-window
         ido-auto-merge-work-directories-length -1)
   (ido-mode +1))
@@ -351,11 +351,12 @@
 
 (use-package ssh-config-mode
   :ensure t
-  :config
-  (progn
-    (add-to-list 'auto-mode-alist '(".ssh/config\\'"  . ssh-config-mode))
-    (add-to-list 'auto-mode-alist '("sshd?_config\\'" . ssh-config-mode))
-    (add-hook 'ssh-config-mode-hook 'turn-on-font-lock)))
+  :init (autoload 'ssh-config-mode "ssh-config-mode" t)
+  (add-hook 'ssh-config-mode-hook 'turn-on-font-lock)
+  :mode (("/\\.ssh/config\\'"     . ssh-config-mode)
+         ("/sshd?_config\\'"      . ssh-config-mode)
+         ("/known_hosts\\'"       . ssh-known-hosts-mode)
+         ("/authorized_keys2?\\'" . ssh-authorized-keys-mode)))
 
 (use-package nginx-mode
   :ensure t
@@ -478,6 +479,59 @@
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
   (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
+
+(use-package erc
+  :defer t
+  :init
+  (progn
+    (setq
+     erc-hide-list '("JOIN" "PART" "QUIT")
+     erc-insert-timestamp-function 'erc-insert-timestamp-left
+     erc-timestamp-format "[%H:%M] "
+     erc-timestamp-only-if-changed-flag nil
+     erc-truncate-mode t
+
+     ;; erc-auto-query (quote window-noselect)
+     erc-auto-query 'buffer
+
+     erc-autoaway-mode t
+     erc-away-nickname nil
+     erc-join-buffer (quote window-noselect)
+     erc-modules (quote (completion list menu scrolltobottom autojoin button dcc fill irccontrols match move-to-prompt netsplit networks noncommands readonly ring stamp spelling track))
+     erc-nick-notify-mod t
+     erc-prompt ">"
+     erc-public-away-p t
+     erc-speedbar-sort-users-type (quote alphabetical)
+     erc-user-full-name "Tomás Solar"
+     erc-email-userid "tsolar"
+
+     ;; Join channels whenever connecting to Freenode.
+     erc-autojoin-channels-alist '(("freenode.net" "#parabola" "#fsfla" "#flisol-cl")
+                                   )
+     ;; Interpret mIRC-style color commands in IRC chats
+     erc-interpret-mirc-color t
+
+     ;; Kill buffers for channels after /part
+     erc-kill-buffer-on-part t
+     ;; Kill buffers for private queries after quitting the server
+     erc-kill-queries-on-quit t
+     ;; Kill buffers for server messages after quitting the server
+     erc-kill-server-buffer-on-quit t
+     )
+    )
+  :config
+  (progn
+    (use-package :erc-hl-nicks
+      :ensure t)
+    (use-package :erc-nick-notify
+      :ensure t)
+    (erc-spelling-mode 1)
+    (add-hook
+     'window-configuration-change-hook
+     (lambda () (setq erc-fill-column (- (window-width) 2))))
+    )
+  )
+
 
 (setq debug-on-error nil)
 (setq debug-on-quit nil)
