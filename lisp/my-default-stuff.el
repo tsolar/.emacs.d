@@ -88,6 +88,12 @@ With negative N, comment out original line and use the absolute value."
 
 (setq tramp-auto-save-directory "~/tmp/emacs-auto-save")
 
+;; start emacs-server if not running
+(add-hook 'after-init-hook
+          (lambda ()
+            (require 'server)
+            (unless (server-running-p)
+              (server-start))))
 
 (setq custom-file "~/.emacs.d/lisp/custom.el")
 (load custom-file)
