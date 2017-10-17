@@ -118,59 +118,41 @@
 
   )
 
-(use-package ruby-mode
+(use-package enh-ruby-mode
+  :ensure t
   :config
   (progn
-    (add-to-list 'auto-mode-alist '("\\.xlsx\\.axlsx\\'" . ruby-mode))
-    ;; -- GODAMMIT RUBY INDENTATION!!! --
-    ;; don't indent parenthesis in a weird way
-    (setq ruby-align-chained-calls nil
-          ruby-align-to-stmt-keywords nil
-          ruby-deep-indent-paren nil
-          ruby-deep-indent-paren-style nil
-          ruby-use-smie nil)
+    (add-to-list 'auto-mode-alist '("\\.xlsx\\.axlsx\\'" . enh-ruby-mode))
+    (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+    (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
+    (remove-hook 'enh-ruby-mode-hook 'erm-define-faces)
+    (setq enh-ruby-deep-indent-paren nil)
 
     (use-package rvm
       :ensure t
       :init (rvm-use-default)
       :config (setq rvm-verbose nil)
-      (add-hook 'ruby-mode-hook #'subword-mode))
+      (add-hook 'enh-ruby-mode-hook #'subword-mode))
 
     (use-package yard-mode
       :ensure t
       :config
-      (add-hook 'ruby-mode-hook 'yard-mode))
+      (add-hook 'enh-ruby-mode-hook 'yard-mode))
 
     (use-package robe
       :ensure t
       :config
-      (add-hook 'ruby-mode-hook 'robe-mode)
+      (add-hook 'enh-ruby-mode-hook 'robe-mode)
       (add-hook 'robe-mode-hook 'ac-robe-setup))
     (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
       (rvm-activate-corresponding-ruby))
-    (defadvice ruby-indent-line (after unindent-closing-paren activate)
-      "Indent sole parenthesis in loca's way."
-      (let ((column (current-column))
-            indent offset)
-        (save-excursion
-          (back-to-indentation)
-          (let ((state (syntax-ppss)))
-            (setq offset (- column (current-column)))
-            (when (and (eq (char-after) ?\))
-                       (not (zerop (car state))))
-              (goto-char (cadr state))
-              (setq indent (current-indentation)))))
-        (when indent
-          (indent-line-to indent)
-          (when (> offset 0) (forward-char offset)))))
-
     ))
 
 (use-package inf-ruby
   :ensure t
-  :after ruby-mode
+  :after enh-ruby-mode
   :config
-  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
+  (add-hook 'enh-ruby-mode-hook #'inf-ruby-minor-mode))
 
 (use-package php-mode
   :ensure t
@@ -181,6 +163,7 @@
                                             comment-style 'indent
                                             comment-use-syntax t
                                             ))))
+
 ;; projectile
 (use-package projectile
   :diminish projectile-mode
@@ -201,7 +184,6 @@
 
 (use-package helm
   :ensure    helm
-
   :config    (setq helm-ff-transformer-show-only-basename nil
                    helm-boring-file-regexp-list           '("\\.git$" "\\.svn$" "\\.elc$")
                    helm-yank-symbol-first                 t
@@ -273,8 +255,6 @@
   (helm-projectile-on)
   ;; (helm-projectile-toggle 1)
   )
-
-
 
 (use-package projectile-rails
   :ensure t
@@ -420,7 +400,6 @@
     (add-hook 'web-mode-hook 'emmet-mode)
     (add-hook 'css-mode-hook 'emmet-mode)))
 
-
 (use-package undo-tree
   :ensure t
   :diminish (undo-tree-mode . "")
@@ -461,7 +440,7 @@
   :config
   (ac-linum-workaround)
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-  (add-hook 'ruby-mode-hook
+  (add-hook 'enh-ruby-mode-hook
             (lambda ()
               (make-local-variable 'ac-stop-words)
               (add-to-list 'ac-stop-words "end"))))
@@ -531,7 +510,6 @@
      (lambda () (setq erc-fill-column (- (window-width) 2))))
     )
   )
-
 
 (setq debug-on-error nil)
 (setq debug-on-quit nil)
