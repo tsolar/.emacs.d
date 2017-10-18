@@ -120,10 +120,16 @@
 
 (use-package enh-ruby-mode
   :ensure t
+  :mode
+  (("Capfile" . enh-ruby-mode)
+   ("Gemfile\\'" . enh-ruby-mode)
+   ("Rakefile" . enh-ruby-mode)
+   ("\\.rb" . enh-ruby-mode)
+   ("\\.ru" . enh-ruby-mode)
+   ("\\.xlsx\\.axlsx\\'" . enh-ruby-mode))
+
   :config
   (progn
-    (add-to-list 'auto-mode-alist '("\\.xlsx\\.axlsx\\'" . enh-ruby-mode))
-    (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
     (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
     (remove-hook 'enh-ruby-mode-hook 'erm-define-faces)
     (setq enh-ruby-deep-indent-paren nil)
@@ -133,6 +139,15 @@
       :init (rvm-use-default)
       :config (setq rvm-verbose nil)
       (add-hook 'enh-ruby-mode-hook #'subword-mode))
+
+    (use-package rspec-mode
+      :ensure t
+      :config
+      (progn
+        (setq rspec-use-rvm t)
+        (eval-after-load 'rspec-mode
+          '(rspec-install-snippets))
+        ))
 
     (use-package yard-mode
       :ensure t
