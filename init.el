@@ -73,7 +73,8 @@
 (use-package rainbow-mode
   :ensure t
   :config
-  (add-hook 'prog-mode-hook #'rainbow-mode))
+  (add-hook 'css-mode-hook #'rainbow-mode)
+  (add-hook 'web-mode-hook #'rainbow-mode))
 
 (use-package whitespace
   :init
@@ -323,7 +324,35 @@
   :config
   (progn
     (set-face-attribute 'web-mode-css-at-rule-face nil :foreground "Pink3")
+
+    (setq web-mode-ac-sources-alist
+          '(("php" . (ac-source-yasnippet ac-source-php-auto-yasnippets))
+            ("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
+            ("css" . (ac-source-css-property ac-source-emmet-css-snippets))))
+
+    (add-hook 'web-mode-before-auto-complete-hooks
+              '(lambda ()
+                 (let ((web-mode-cur-language
+                        (web-mode-language-at-pos)))
+                   (if (string= web-mode-cur-language "php")
+                       (yas-activate-extra-mode 'php-mode)
+                     (yas-deactivate-extra-mode 'php-mode))
+                   (if (string= web-mode-cur-language "css")
+                       (setq emmet-use-css-transform t)
+                     (setq emmet-use-css-transform nil)))))
+
     )
+  )
+
+(use-package flycheck
+  :ensure t
+  :defer t
+  :init
+  (progn
+    (global-flycheck-mode)
+    (flycheck-add-mode 'javascript-eslint 'web-mode))
+  :config
+  (advice-add 'flycheck-eslint-config-exists-p :override (lambda() t))
   )
 
 (use-package slim-mode

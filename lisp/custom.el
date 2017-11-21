@@ -30,6 +30,7 @@
  '(erc-user-full-name "Tomás Solar" t)
  '(exec-path-from-shell-check-startup-files nil)
  '(ffap-require-prefix t)
+ '(flycheck-javascript-eslint-executable "node_modules/eslint/bin/eslint.js")
  '(flymake-phpcs-location (quote tempdir))
  '(flymake-phpcs-standard "PSR2")
  '(flyspell-issue-message-flag nil)
@@ -82,6 +83,13 @@
  '(recentf-mode t)
  '(require-final-newline t)
  '(rspec-use-spring-when-possible nil)
+ '(ruby-encoding-map
+   (quote
+    ((us-ascii)
+     (shift-jis . cp932)
+     (shift_jis . cp932)
+     (japanese-cp932 . cp932)
+     (undecided . utf-8))))
  '(safe-local-variable-values
    (quote
     ((encoding . utf-8)
@@ -108,7 +116,7 @@
  '(vc-annotate-background nil)
  '(vc-annotate-very-old-color nil)
  '(web-mode-enable-current-column-highlight t)
- '(web-mode-enable-part-face nil t)
+ '(web-mode-enable-part-face nil)
  '(which-function-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
