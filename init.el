@@ -152,6 +152,12 @@
           '(rspec-install-snippets))
         ))
 
+    (use-package rubocop
+      :ensure t
+      :init
+      (add-hook 'enh-ruby-mode-hook 'rubocop-mode)
+      :diminish rubocop-mode)
+
     (use-package yard-mode
       :ensure t
       :config
