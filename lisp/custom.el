@@ -16,6 +16,7 @@
  '(display-battery-mode t)
  '(display-time-mode t)
  '(ecb-options-version "2.40")
+ '(enh-ruby-add-encoding-comment-on-save nil)
  '(erc-auto-query (quote window-noselect) t)
  '(erc-autoaway-mode t t)
  '(erc-away-nickname nil t)
@@ -71,7 +72,7 @@
  '(nyan-wavy-trail t)
  '(package-selected-packages
    (quote
-    (rspec-mode :erc-nick-notify :erc-hl-nicks vdiff-magit vimish-fold auto-complete yasnippet yaml-mode web-mode web-beautify vcl-mode use-package undo-tree twittering-mode tea-time syslog-mode ssh-config-mode solarized-theme smartparens smart-mode-line-powerline-theme smart-mode-line slim-mode scss-mode sass-mode rvm robe rinari rainbow-mode rainbow-delimiters railscasts-theme projectile-rails popwin php-auto-yasnippets nyan-mode nginx-mode neotree mustard-theme multiple-cursors move-text minimap markdown-mode magit lua-mode jump json-mode js3-mode inf-ruby iedit hl-anything highlight-symbol highlight-parentheses highlight-indentation hide-lines helm-rhythmbox helm-rails helm-projectile helm-ls-git helm-fuzzier helm-emmet helm-company helm-ag helm haml-mode gitignore-mode github-theme git-gutter-fringe+ git-gutter+ git-commit fringe-helper flymake-yaml flymake-shell flymake-sass flymake-ruby flymake-python-pyflakes flymake-phpcs flymake-php flymake-lua flymake-less flymake-json flymake-jslint flymake-jshint flymake-hlint flymake-haml flymake-gjshint flymake-cursor flymake-css flylisp flycheck-tip flycheck-pyflakes flycheck flx-ido flx findr f exec-path-from-shell epl emms-info-mediainfo emms elscreen ecb easy-repeat diff-hl darktooth-theme csv-mode company-web company color-theme-github color-theme coffee-mode bash-completion async aggressive-indent ag ac-emmet)))
+    (rubocop rspec-mode :erc-nick-notify :erc-hl-nicks vdiff-magit vimish-fold auto-complete yasnippet yaml-mode web-mode web-beautify vcl-mode use-package undo-tree twittering-mode tea-time syslog-mode ssh-config-mode solarized-theme smartparens smart-mode-line-powerline-theme smart-mode-line slim-mode scss-mode sass-mode rvm robe rinari rainbow-mode rainbow-delimiters railscasts-theme projectile-rails popwin php-auto-yasnippets nyan-mode nginx-mode neotree mustard-theme multiple-cursors move-text minimap markdown-mode magit lua-mode jump json-mode js3-mode inf-ruby iedit hl-anything highlight-symbol highlight-parentheses highlight-indentation hide-lines helm-rhythmbox helm-rails helm-projectile helm-ls-git helm-fuzzier helm-emmet helm-company helm-ag helm haml-mode gitignore-mode github-theme git-gutter-fringe+ git-gutter+ git-commit fringe-helper flymake-yaml flymake-shell flymake-sass flymake-ruby flymake-python-pyflakes flymake-phpcs flymake-php flymake-lua flymake-less flymake-json flymake-jslint flymake-jshint flymake-hlint flymake-haml flymake-gjshint flymake-cursor flymake-css flylisp flycheck-tip flycheck-pyflakes flycheck flx-ido flx findr f exec-path-from-shell epl emms-info-mediainfo emms elscreen ecb easy-repeat diff-hl darktooth-theme csv-mode company-web company color-theme-github color-theme coffee-mode bash-completion async aggressive-indent ag ac-emmet)))
  '(password-cache-expiry nil)
  '(php-lineup-cascaded-calls t)
  '(php-mode-coding-style (quote pear))
@@ -116,7 +117,7 @@
  '(vc-annotate-background nil)
  '(vc-annotate-very-old-color nil)
  '(web-mode-enable-current-column-highlight t)
- '(web-mode-enable-part-face nil)
+ '(web-mode-enable-part-face nil t)
  '(which-function-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
