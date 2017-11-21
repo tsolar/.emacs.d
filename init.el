@@ -129,6 +129,9 @@
    ("\\.ru" . enh-ruby-mode)
    ("\\.xlsx\\.axlsx\\'" . enh-ruby-mode))
 
+  :init
+  (add-hook 'enh-ruby-mode-hook #'subword-mode)
+
   :config
   (progn
     (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
@@ -138,8 +141,7 @@
     (use-package rvm
       :ensure t
       :init (rvm-use-default)
-      :config (setq rvm-verbose nil)
-      (add-hook 'enh-ruby-mode-hook #'subword-mode))
+      :config (setq rvm-verbose nil))
 
     (use-package rspec-mode
       :ensure t
@@ -167,7 +169,7 @@
 (use-package inf-ruby
   :ensure t
   :after enh-ruby-mode
-  :config
+  :init
   (add-hook 'enh-ruby-mode-hook #'inf-ruby-minor-mode))
 
 (use-package php-mode
