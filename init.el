@@ -139,6 +139,12 @@
     (remove-hook 'enh-ruby-mode-hook 'erm-define-faces)
     (setq enh-ruby-deep-indent-paren nil)
 
+    (use-package ruby-tools
+      :ensure t
+      :init
+      (add-hook 'enh-ruby-mode-hook 'ruby-tools-mode)
+      :diminish ruby-tools-mode)
+
     (use-package rvm
       :ensure t
       :init (rvm-use-default)
@@ -472,7 +478,8 @@
   (global-undo-tree-mode 1))
 
 (use-package iedit
-  :ensure t)
+  :ensure t
+  :bind      ("C-c C-;" . iedit-mode))
 
 (use-package smart-mode-line
   :ensure smart-mode-line
