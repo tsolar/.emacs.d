@@ -38,6 +38,7 @@
   :config)
 
 (use-package exec-path-from-shell
+  :ensure t
   :config
   (push "HISTFILE" exec-path-from-shell-variables)
   (setq exec-path-from-shell-check-startup-files nil)
