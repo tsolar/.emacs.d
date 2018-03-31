@@ -48,14 +48,23 @@
 
 (use-package ido
   :ensure t
+  :init
+  (progn
+    (ido-mode 1)
+    (use-package ido-vertical-mode
+      :ensure t
+      :init (ido-vertical-mode 1))
+    (use-package flx-ido
+      :ensure t
+      :init (flx-ido-mode 1)))
   :config
   (setq ido-enable-prefix nil
         ido-enable-flex-matching t
         ido-create-new-buffer 'always
-        ido-use-filename-at-point t ;; 'guess
+        ido-use-filename-at-point nil ;; 'guess
         ido-default-file-method 'selected-window
         ido-auto-merge-work-directories-length -1)
-  (ido-mode +1))
+  )
 
 (use-package magit
   :ensure t
