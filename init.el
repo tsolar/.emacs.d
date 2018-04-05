@@ -240,6 +240,10 @@
                (helm-mode t)
                ;; (helm-adaptative-mode t)
 
+               (use-package swiper-helm
+                 :ensure    swiper-helm
+                 :bind      ("C-s" . swiper-helm))
+
                (use-package helm-ag
                  :ensure    helm-ag
                  :bind      ("C-c a" . helm-ag))
