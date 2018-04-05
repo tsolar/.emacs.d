@@ -9,7 +9,7 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-(setq default-buffer-file-coding-system 'utf-8)
+(setq buffer-file-coding-system 'utf-8)
 
 ;; Turn on syntax colouring in all modes supporting it:
 (global-font-lock-mode t)
@@ -76,10 +76,10 @@ With negative N, comment out original line and use the absolute value."
 ;;; after declarating cua-mode
 ;; yanking
 ;; after copy Ctrl+c in X11 apps, you can paste by `yank' in emacs
-(setq x-select-enable-clipboard t)
+(setq select-enable-clipboard t)
 
 ;; after mouse selection in X11, you can paste by `yank' in emacs
-(setq x-select-enable-primary nil)
+(setq select-enable-primary nil)
 
 (setq tramp-auto-save-directory "~/tmp/emacs-auto-save")
 

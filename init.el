@@ -17,9 +17,6 @@
 
 (package-initialize)
 
-;; keep the installed packages in .emacs.d
-(setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
-
 ;; fetch the list of packages available
 (unless package-archive-contents
   (package-refresh-contents))
@@ -121,7 +118,7 @@
       (sp-local-pair "<" ">"))
 
     ;; lisp modes
-    (sp-with-modes sp--lisp-modes
+    (sp-with-modes sp-lisp-modes
       (sp-local-pair "(" nil :bind "C-("))
     (smartparens-global-mode t)
     (show-smartparens-global-mode t)
