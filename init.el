@@ -1,447 +1,597 @@
 (setq debug-on-error t)
 (setq debug-on-quit t)
 
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(unless (display-graphic-p) (menu-bar-mode -1))
+(load "~/.emacs.d/lisp/my-default-stuff.el")
 
-
-(load "~/.emacs.d/lisp/my-packages.el")
-(require 'my-packages)
-
-(setq custom-file "~/.emacs.d/lisp/custom.el")
-(load custom-file)
-
-
-(setq-default fill-column 80)
-
-;; use UTF8!
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(setq default-buffer-file-coding-system 'utf-8)
-
-
-;; exec-path-from-shell
-(exec-path-from-shell-initialize)
-(exec-path-from-shell-copy-env "PATH")
-(exec-path-from-shell-copy-env "JAVA_HOME")
-
-;;;;;;;;;;;;; General settings
-;; Turn on syntax colouring in all modes supporting it:
-(global-font-lock-mode t)
-
-(recentf-mode 1) ; keep a list of recently opened files
-(delete-selection-mode 1) ;; replace selection when typing
-
-(setq search-highlight           t) ; Highlight search object
-(setq query-replace-highlight    t) ; Highlight query object
-(setq mouse-sel-retain-highlight t) ; Keep mouse high-lightening
-
-(setq stack-trace-on-error t)
-
-
-;; stop annoying questions
-(setq-default abbrev-mode t)
-;;(read-abbrev-file “~/.abbrev_defs”)
-(setq save-abbrevs t)
-
-;; delete trailing whitespaces!
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; mover línea hacia arriba
-(defun move-line-up ()
-  (interactive)
-  (transpose-lines 1)
-  (forward-line -2))
-
-;; mover línea hacia abajo
-(defun move-line-down ()
-  (interactive)
-  (forward-line 1)
-  (transpose-lines 1)
-  (forward-line -1))
-
-
-(global-set-key (kbd "S-M-<up>") 'move-text-up)
-(global-set-key (kbd "S-M-<down>") 'move-text-down)
-
-;; cuando cambio de buffer me quedo en el buffer nuevo!
-(global-set-key "\C-x2" (lambda () (interactive)(split-window-vertically) (other-window 1)))
-(global-set-key "\C-x3" (lambda () (interactive)(split-window-horizontally) (other-window 1)))
-
-;; Split windows a bit better (don't split horizontally, I have a widescreen :P)
-(setq split-height-threshold nil)
-(setq split-width-threshold 180)
-
-;; cycle through buffers
-(global-set-key (kbd "<C-tab>") 'bury-buffer)
-
-;; tea time
-(define-key global-map "\C-ct" 'tea-time)
-
-(global-set-key "\C-xk" 'kill-this-buffer) ; Kill buffer without confirmation
-
-(defun duplicate-line-or-region (&optional n)
-  "Duplicate current line, or region if active.
-With argument N, make N copies.
-With negative N, comment out original line and use the absolute value."
-  (interactive "*p")
-  (let ((use-region (use-region-p)))
-    (save-excursion
-      (let ((text (if use-region        ;Get region if active, otherwise line
-                      (buffer-substring (region-beginning) (region-end))
-                    (prog1 (thing-at-point 'line)
-                      (end-of-line)
-                      (if (< 0 (forward-line 1)) ;Go to beginning of next line, or make a new one
-                          (newline))))))
-        (dotimes (i (abs (or n 1)))     ;Insert N times, or once if not specified
-          (insert text))))
-    (if use-region nil                  ;Only if we're working with a line (not a region)
-      (let ((pos (- (point) (line-beginning-position)))) ;Save column
-        (if (> 0 n)                             ;Comment out original with negative arg
-            (comment-region (line-beginning-position) (line-end-position)))
-        (forward-line 1)
-        (forward-char pos)))))
-
-(global-set-key (kbd "C-c d") 'duplicate-line-or-region) ; duplicate line or region
-(global-set-key "\C-c\C-d" "\C-a\C- \C-n\M-w\C-y\C-p") ; clone current line
-
-(global-set-key (kbd "C-x g") 'magit-status)
-
-;;(setq gtags-auto-update nil) ;; drupal fix/workaround?
-
-;; full name in title
-(setq frame-title-format
-      (list (format "%s %%S: %%j " (system-name))
-            '(buffer-file-name "%f" (dired-directory dired-directory "%b"))))
-
-;; full path in modeline
-;; (setq-default mode-line-buffer-identification
-;;               (list 'buffer-file-name
-;;                     (propertized-buffer-identification "%12f")
-;;                     (propertized-buffer-identification "%12b")
-;;                     ))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; revert
-
-(global-auto-revert-mode 1)
-(setq auto-revert-verbose nil)
-
-(global-set-key (kbd "<f5>") 'revert-buffer)
-
-;; end revert
-
-
-;;; after declarating cua-mode
-;; yanking
-;; after copy Ctrl+c in X11 apps, you can paste by `yank' in emacs
-(setq x-select-enable-clipboard t)
-
-;; after mouse selection in X11, you can paste by `yank' in emacs
-(setq x-select-enable-primary nil)
-
-(setq tramp-auto-save-directory "~/tmp/emacs-auto-save")
-
-;; disable linum
-;(setq linum-disabled-modes-list '(eshell-mode wl-summary-mode compilation-mode emms)) (defun linum-on () (unless (or (minibufferp) (member major-mode linum-disabled-modes-list)) (linum-mode 1)))
-
-(add-hook 'prog-mode-hook 'linum-mode)
-
-;;;;;;;;;;;;;;; end general settings
-
-;;;;;;;; Lets load the modes
-;; init.el
 (require 'package)
-;(package-initialize)
 
-;; load required packages
-(load "lua-mode")
-;;(load "php-mode")
-(load "rainbow-mode")
-(load "flycheck")
-(load "tea-time")
-(load "iedit")
-
-;; load my setup
-(require 'my-hideshow)
-(require 'my-helm)
-(require 'my-projectile)
-(require 'my-web-mode)
-(require 'my-emmet)
-(require 'my-smartparents)
-(require 'my-highlight-parentheses)
-(require 'my-rainbow-delimiters)
-(require 'my-company)
-(require 'my-flymake)
-(require 'my-auto-complete)
-
-(require 'my-multiple-cursors)
-
-(require 'my-emms)
-;(require 'my-tabbar)
-
-(require 'my-sml)
-
-(require 'my-aggressive-indent)
-(require 'popwin)
-(popwin-mode 1)
-(setq display-buffer-function 'popwin:display-buffer)
-(push '("*[Hh]elm*") popwin:special-display-config)
-
-
-;;(rainbow-identifiers-mode 1)
-
-;;(require 'ido)
-;;(ido-mode t)
-
-;; undo-tree http://www.dr-qubit.org/git/undo-tree.git
-(global-undo-tree-mode)
-
-(bash-completion-setup)
-
-(require 'flx-ido)
-(ido-mode 1)
-(ido-everywhere 1)
-(flx-ido-mode 1)
-;; disable ido faces to see flx highlights.
-(setq ido-enable-flex-matching t)
-(setq ido-use-faces nil)
-
-;; (use-package magit-gh-pulls
-;;   :ensure magit
-;;   (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
-;;   )
-
-
-;; Load rvm.el
-(require 'rvm)
-;; use rvm’s default ruby for the current Emacs session
-(rvm-use-default)
-
-(defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
-  (rvm-activate-corresponding-ruby))
-
-;; robe
-(add-hook 'ruby-mode-hook 'robe-mode)
-
-;; robe ac
-(add-hook 'robe-mode-hook 'ac-robe-setup)
-
-;;;; robe company
-;;(eval-after-load 'company
-;;  '(push 'company-robe company-backends))
-
-
-;; rails rinari-mode
-;;(require 'rinari)
-;;(load "rinari")
-;;(global-rinari-mode)
-
-;;(setq rinari-tags-file-name "TAGS")
-
-;; (global-git-gutter+-mode)
-;; (require 'git-gutter-fringe+)
-
-(require 'ecb)
-
-(require 'neotree)
-(global-set-key [f8] 'neotree-toggle)
-
-(require 'php-auto-yasnippets)
-;; (load "php-auto-yasnippets")
-(define-key php-mode-map (kbd "C-c C-y") 'yas/create-php-snippet)
-(payas/ac-setup)
-
-
-(require 'notifications)
-
-(require 'hl-anything)
-;;(require 'hl-paren-mode)
-
-(require 'easy-repeat)
-
-;;;;;;;;;;;;; modes loaded
-
-
-;;;;;;;;;;;; modes configs
-
-;; ag!
-(setq ag-highlight-search t)
-(setq ag-reuse-window t)
-
-;; highlight symbol
-(require 'highlight-symbol)
-(global-set-key [(control f3)] 'highlight-symbol)
-(global-set-key [f3] 'highlight-symbol-next)
-(global-set-key [(shift f3)] 'highlight-symbol-prev)
-(global-set-key [(meta f3)] 'highlight-symbol-query-replace)
-
-;; stop annoying when autocompleting
-(ac-linum-workaround)
-
-;; ssh-config-mode
-(autoload 'ssh-config-mode "ssh-config-mode" t)
-(add-to-list 'auto-mode-alist '(".ssh/config\\'"  . ssh-config-mode))
-(add-to-list 'auto-mode-alist '("sshd?_config\\'" . ssh-config-mode))
-(add-hook 'ssh-config-mode-hook 'turn-on-font-lock)
-
-;; nginx-mode
-(add-to-list 'auto-mode-alist '("/etc/nginx/nginx.conf\\'" . nginx-mode))
-(add-to-list 'auto-mode-alist '("/etc/nginx/sites-\\(enabled\\|available\\)/.*\\'" . nginx-mode))
-
-;; varnish-mode
-(add-to-list 'auto-mode-alist '("\\.vcl\\'" . vcl-mode))
-
-;; markdown-mode
-(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-
-(setq flycheck-tip-avoid-show-func nil)
-
-;; web-beautify
-(eval-after-load 'js2-mode
-  '(define-key js2-mode-map (kbd "C-c b") 'web-beautify-js))
-(eval-after-load 'js3-mode
-  '(define-key js3-mode-map (kbd "C-c b") 'web-beautify-js))
-;; Or if you're using 'js-mode' (a.k.a 'javascript-mode')
-(eval-after-load 'js
-  '(define-key js-mode-map (kbd "C-c b") 'web-beautify-js))
-
-(eval-after-load 'json-mode
-  '(define-key json-mode-map (kbd "C-c b") 'web-beautify-js))
-
-(eval-after-load 'sgml-mode
-  '(define-key html-mode-map (kbd "C-c b") 'web-beautify-html))
-
-(eval-after-load 'css-mode
-  '(define-key css-mode-map (kbd "C-c b") 'web-beautify-css))
-
-;; xlsx.axlsx views ruby mode
-
-(add-to-list 'auto-mode-alist '("\\.xlsx\\.axlsx\\'" . ruby-mode))
-
-
-;; yaml
-(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-
-;; csv
-(add-to-list 'auto-mode-alist '("\\.[Cc][Ss][Vv]\\'" . csv-mode))
-(autoload 'csv-mode "csv-mode"
-  "Major mode for editing comma-separated value files." t)
-
-;;; hooks
-;; rainbow-mode
-(add-hook 'css-mode-hook 'rainbow-mode)
-(add-hook 'php-mode-hook 'rainbow-mode)
-(add-hook 'html-helper-mode-hook 'rainbow-mode)
-(add-hook 'lua-mode-hook 'rainbow-mode)
-(add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
-
-(add-hook 'yaml-mode-hook
-	  '(lambda ()
-	     (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
-
-(add-hook 'tea-time-notification-hook
-	  (lambda ()
-	    (notifications-notify :title "Time is up!"
-				  :body "I know you're busy, but it's TEA TIME!!"
-				  :app-name "Tea Time"
-				  :sound-name "alarm-clock-elapsed")))
-
-(add-hook 'php-mode-hook (lambda () (setq comment-start "// "
-					  comment-end ""
-					  comment-style 'indent
-					  comment-use-syntax t
-					  )))
-
-;; indent region after exit yasnippet
-(add-hook 'yas/after-exit-snippet-hook
-	  '(lambda ()
-	     (indent-region yas/snippet-beg yas/snippet-end)))
-
-;; I am using yasnippet in PHP mode, so, load minor mode!
-(add-hook 'php-mode-hook 'yas-minor-mode)
-
-
-;; git-gutter+
-(eval-after-load 'git-gutter+
-  '(progn
-     ;;; Jump between hunks
-     (define-key git-gutter+-mode-map (kbd "C-x n") 'git-gutter+-next-hunk)
-     (define-key git-gutter+-mode-map (kbd "C-x p") 'git-gutter+-previous-hunk)
-
-     ;;; Act on hunks
-     (define-key git-gutter+-mode-map (kbd "C-x v =") 'git-gutter+-show-hunk)
-     (define-key git-gutter+-mode-map (kbd "C-x r") 'git-gutter+-revert-hunks)
-
-     ;; Stage hunk at point.
-     ;; If region is active, stage all hunk lines within the region.
-     (define-key git-gutter+-mode-map (kbd "C-x t") 'git-gutter+-stage-hunks)
-     (define-key git-gutter+-mode-map (kbd "C-x c") 'git-gutter+-commit)
-     (define-key git-gutter+-mode-map (kbd "C-x C") 'git-gutter+-stage-and-commit)
-     (define-key git-gutter+-mode-map (kbd "C-x C-y") 'git-gutter+-stage-and-commit-whole-buffer)
-     (define-key git-gutter+-mode-map (kbd "C-x U") 'git-gutter+-unstage-whole-buffer)))
-;; end git-gutter+
-
-
-;; ruby indent accessors
-(defadvice ruby-indent-line (around outdent-modifiers activate)
-  (if (save-excursion
-        (beginning-of-line)
-        (looking-at "\s*\\(private\\|protected\\|public\\)\s*$"))
-      (save-excursion
-        (beginning-of-line)
-        (just-one-space 0))
-      ad-do-it))
-;;;;;;;;;;;; end modes config
-
-
-
-;; paren-mode-helper
-(defadvice show-paren-function
-    (after show-matching-paren-offscreen activate)
-  "If the matching paren is offscreen, show the matching line in the
-        echo area. Has no effect if the character before point is not of
-        the syntax class ')'."
-  (interactive)
-  (let* ((cb (char-before (point)))
-  	 (matching-text (and cb
-  			     (char-equal (char-syntax cb) ?\) )
-  			     (blink-matching-open))))
-    (when matching-text (message matching-text))))
-
-;;;; the following makes a jump to code, I do not like that :/
-;; (defadvice show-paren-function (after my-echo-paren-matching-line activate)
-;;   "If a matching paren is off-screen, echo the matching line."
-;;   (when (char-equal (char-syntax (char-before (point))) ?\))
-;;     (let ((matching-text (blink-matching-open)))
-;;       (when matching-text
-;;         (message matching-text)))))
-;; end paren mode helper
-
-;;; comment or uncomment line or region
-(defun comment-or-uncomment-current-line-or-region ()
-  "Comments or uncomments current current line or whole lines in region."
-  (interactive)
-  (save-excursion
-    (let (min max)
-      (if (region-active-p)
-          (setq min (region-beginning) max (region-end))
-        (setq min (point) max (point)))
-      (comment-or-uncomment-region
-       (progn (goto-char min) (line-beginning-position))
-       (progn (goto-char max) (line-end-position))))))
-(global-set-key (kbd "C-7") 'comment-or-uncomment-current-line-or-region)
-;;; end comment or uncoment...
-
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("elpa" . "http://tromey.com/elpa/")
+                         ("melpa" . "http://melpa.org/packages/")
+                         ("melpa-stable" . "http://stable.melpa.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ))
+
+;; keep the installed packages in .emacs.d
+(setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
+
+(package-initialize)
+
+;; fetch the list of packages available
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(add-to-list 'load-path "~/.emacs.d/lisp")
+(add-to-list 'load-path "~/.emacs.d/elpa")
+
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-verbose t)
+
+(use-package cua-base
+  :init (cua-mode 1)
+  :config)
+
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (push "HISTFILE" exec-path-from-shell-variables)
+  (setq exec-path-from-shell-check-startup-files nil)
+  (exec-path-from-shell-copy-env "PATH")
+  (exec-path-from-shell-copy-env "JAVA_HOME")
+  (exec-path-from-shell-initialize))
+
+(use-package ido
+  :ensure t
+  :init
+  (progn
+    (ido-mode 1)
+    (use-package ido-vertical-mode
+      :ensure t
+      :init (ido-vertical-mode 1))
+    (use-package flx-ido
+      :ensure t
+      :init (flx-ido-mode 1)))
+  :config
+  (setq ido-enable-prefix nil
+        ido-enable-flex-matching t
+        ido-create-new-buffer 'always
+        ido-use-filename-at-point nil ;; 'guess
+        ido-default-file-method 'selected-window
+        ido-auto-merge-work-directories-length -1)
+  )
+
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status)))
+
+(use-package diff-hl
+  :ensure t
+  :config
+  (global-diff-hl-mode)
+  (diff-hl-flydiff-mode)
+  ;; (diff-hl-margin-mode)
+  (diff-hl-dired-mode)
+  ;; using magit 2.4 or newer
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+
+(use-package rainbow-mode
+  :ensure t
+  :config
+  (add-hook 'css-mode-hook #'rainbow-mode)
+  (add-hook 'web-mode-hook #'rainbow-mode))
+
+(use-package whitespace
+  :init
+  (dolist (hook '(prog-mode-hook text-mode-hook))
+    (add-hook hook #'whitespace-mode))
+  (add-hook 'before-save-hook #'whitespace-cleanup)
+  :config
+  (setq whitespace-line-column 80) ;; limit line length
+  (setq whitespace-style '(face tabs empty trailing lines-tail)))
+
+(use-package smartparens
+  :ensure t
+  :diminish smartparens-mode
+  :config
+  (progn
+    (require 'smartparens-config)
+    (sp-local-pair 'web-mode "{" "}" :actions nil)
+    (sp-local-pair 'web-mode "<" ">" :actions nil)
+    (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
+    ;;; markdown-mode
+    (sp-with-modes '(markdown-mode gfm-mode rst-mode)
+      (sp-local-pair "*" "*" :bind "C-*")
+      (sp-local-tag "2" "**" "**")
+      (sp-local-tag "s" "```scheme" "```")
+      (sp-local-tag "<"  "<_>" "</_>" :transform 'sp-match-sgml-tags))
+
+    ;; tex-mode latex-mode
+    (sp-with-modes '(tex-mode plain-tex-mode latex-mode)
+      (sp-local-tag "i" "\"<" "\">")
+      (sp-local-tag "<"  "<_>" "</_>" :transform 'sp-match-sgml-tags))
+
+    ;; html-mode
+    (sp-with-modes '(html-mode sgml-mode)
+      (sp-local-pair "<" ">"))
+
+    ;; lisp modes
+    (sp-with-modes sp-lisp-modes
+      (sp-local-pair "(" nil :bind "C-("))
+    (smartparens-global-mode t)
+    (show-smartparens-global-mode t)
+    )
+
+  )
+
+(use-package enh-ruby-mode
+  :ensure t
+  :mode
+  (("Capfile" . enh-ruby-mode)
+   ("Gemfile\\'" . enh-ruby-mode)
+   ("Rakefile" . enh-ruby-mode)
+   ("\\.rb" . enh-ruby-mode)
+   ("\\.ru" . enh-ruby-mode)
+   ("\\.xlsx\\.axlsx\\'" . enh-ruby-mode))
+
+  :init
+  (add-hook 'enh-ruby-mode-hook #'subword-mode)
+  (add-hook 'enh-ruby-mode-hook
+            (lambda () (rvm-activate-corresponding-ruby)))
+  :config
+  (progn
+    (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
+    (remove-hook 'enh-ruby-mode-hook 'erm-define-faces)
+    (setq enh-ruby-deep-indent-paren nil)
+
+    (use-package ruby-tools
+      :ensure t
+      :init
+      (add-hook 'enh-ruby-mode-hook 'ruby-tools-mode)
+      :diminish ruby-tools-mode)
+
+    (use-package rvm
+      :ensure t
+      :init (rvm-use-default)
+      :config (setq rvm-verbose nil))
+
+    (use-package rspec-mode
+      :ensure t
+      :config
+      (progn
+        (setq rspec-use-rvm t)
+        (eval-after-load 'rspec-mode
+          '(rspec-install-snippets))
+        ))
+
+    (use-package rubocop
+      :ensure t
+      :init
+      (add-hook 'enh-ruby-mode-hook 'rubocop-mode)
+      :diminish rubocop-mode)
+
+    (use-package yard-mode
+      :ensure t
+      :config
+      (add-hook 'enh-ruby-mode-hook 'yard-mode))
+
+    (use-package robe
+      :ensure t
+      :config
+      (add-hook 'enh-ruby-mode-hook 'robe-mode)
+      (add-hook 'robe-mode-hook 'ac-robe-setup))
+    (defadvice inf-ruby-console-auto (before activate-rvm-for-robe activate)
+      (rvm-activate-corresponding-ruby))
+    ))
+
+(use-package inf-ruby
+  :ensure t
+  :after enh-ruby-mode
+  :init
+  (add-hook 'enh-ruby-mode-hook #'inf-ruby-minor-mode))
+
+(use-package php-mode
+  :ensure t
+  ;;:mode "\\.php[345]?\\'"
+  :config
+  (add-hook 'php-mode-hook (lambda () (setq comment-start "// "
+                                            comment-end ""
+                                            comment-style 'indent
+                                            comment-use-syntax t
+                                            ))))
+
+;; projectile
+(use-package projectile
+  :diminish projectile-mode
+  :config
+  (setq projectile-enable-caching nil
+        projectile-completion-system 'helm
+        projectile-find-dir-includes-top-level t
+        projectile-switch-project-action 'helm-projectile)
+  ;; (projectile-global-mode)
+  (add-hook 'text-mode-hook #'projectile-mode)
+  (add-hook 'prog-mode-hook #'projectile-mode)
+  (add-hook 'magit-mode-hook #'projectile-mode)
+  (add-hook 'css-mode-hook #'projectile-mode)
+  (add-hook 'yaml-mode-hook #'projectile-mode)
+  (add-hook 'gitignore-mode-hook #'projectile-mode)
+
+  )
+
+(use-package helm
+  :ensure    helm
+  :config    (setq helm-ff-transformer-show-only-basename nil
+                   helm-boring-file-regexp-list           '("\\.git$" "\\.svn$" "\\.elc$")
+                   helm-yank-symbol-first                 t
+                   helm-buffers-fuzzy-matching            t
+                   helm-ff-auto-update-initial-value      t
+                   helm-input-idle-delay                  0.1
+                   helm-idle-delay                        0.1
+                   helm-semantic-fuzzy-match t
+                   helm-imenu-fuzzy-match    t
+                   helm-lisp-fuzzy-completion t
+                   helm-M-x-fuzzy-match t
+                   )
+
+  :init      (progn
+               (require 'helm-config)
+               (helm-mode t)
+               ;; (helm-adaptative-mode t)
+
+               (use-package helm-ag
+                 :ensure    helm-ag
+                 :bind      ("C-c a" . helm-ag))
+
+               (use-package helm-descbinds
+                 :ensure    helm-descbinds
+                 :bind      ("C-h b"   . helm-descbinds))
+
+               (add-hook 'eshell-mode-hook
+                         #'(lambda ()
+                             (bind-key "M-p" 'helm-eshell-history eshell-mode-map)))
+
+               (use-package helm-swoop
+                 :ensure    helm-swoop
+                 :bind      (("C-c o" . helm-swoop)
+                             ("C-c M-o" . helm-multi-swoop)))
+
+               (use-package helm-fuzzier
+                 :ensure helm-fuzzier
+                 :config
+                 (helm-fuzzier-mode 1))
+
+               ;; (when (executable-find "ack-grep")
+               ;;   (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
+               ;;         helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
+               ;; use silver searcher when available
+               (when (executable-find "ag-grep")
+                 (setq helm-grep-default-command "ag-grep -Hn --no-group --no-color %e %p %f"
+                       helm-grep-default-recurse-command "ag-grep -H --no-group --no-color %e %p %f"))
+               (bind-key "C-c C-SPC" 'helm-ff-run-toggle-auto-update helm-find-files-map))
+
+  :bind (("C-x r l" . helm-bookmarks)
+         ("M-x" . helm-M-x)
+         ("C-h i"   . helm-google-suggest)
+         ("M-y"     . helm-show-kill-ring)
+         ("C-h a"   . helm-apropos)
+         ("C-x C-f" . helm-find-files)
+         ("C-x p" .   helm-top)
+         ("C-x C-b" . helm-buffers-list)
+         ("C-x b"   . helm-mini))
+
+  :diminish helm-mode)
+
+(use-package helm-projectile
+  :ensure t
+  :after helm
+  :commands (helm-projectile)
+  :config
+  (setq projectile-completion-system 'helm)
+  (setq projectile-find-dir-includes-top-level t)
+  (helm-projectile-on)
+  ;; (helm-projectile-toggle 1)
+  )
+
+(use-package projectile-rails
+  :ensure t
+  :defer t
+  :init
+  (progn
+    (add-hook 'projectile-mode-hook 'projectile-rails-on)))
+
+(use-package web-mode
+  :ensure t
+  :mode (("\\.html\\'" . web-mode)
+         ("\\.html\\.erb\\'" . web-mode)
+         ("\\.mustache\\'" . web-mode)
+         ("\\.jinja\\'" . web-mode)
+         ("\\.php\\'" . web-mode)
+         )
+  :init
+  (progn
+    (setq web-mode-engines-alist
+          '(("\\.jinja\\'"  . "django")))
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+    (setq web-mode-code-indent-offset 2)
+    (setq web-mode-indent-style 2)
+
+    ;;(define-key web-mode-map (kbd "C-n") 'web-mode-tag-match)
+    (setq web-mode-disable-auto-pairing nil)
+    (setq web-mode-enable-block-face t)
+    (setq web-mode-enable-part-face t)
+    (setq web-mode-enable-comment-keywords t)
+    (setq web-mode-enable-heredoc-fontification t)
+    (setq web-mode-disable-css-colorization nil)
+    (setq web-mode-enable-current-element-highlight t)
+    (setq web-mode-comment-style 2)
+    (setq web-mode-style-padding 2)
+    (setq web-mode-script-padding 2)
+    ;; (add-to-list 'auto-mode-alist '("\\.php\\'" . php-mode))
+    (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.ctp\\.php\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.ctp\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.blade\\.php\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
+    )
+  :config
+  (progn
+    (set-face-attribute 'web-mode-css-at-rule-face nil :foreground "Pink3")
+
+    (setq web-mode-ac-sources-alist
+          '(("php" . (ac-source-yasnippet ac-source-php-auto-yasnippets))
+            ("html" . (ac-source-emmet-html-aliases ac-source-emmet-html-snippets))
+            ("css" . (ac-source-css-property ac-source-emmet-css-snippets))))
+
+    (add-hook 'web-mode-before-auto-complete-hooks
+              '(lambda ()
+                 (let ((web-mode-cur-language
+                        (web-mode-language-at-pos)))
+                   (if (string= web-mode-cur-language "php")
+                       (yas-activate-extra-mode 'php-mode)
+                     (yas-deactivate-extra-mode 'php-mode))
+                   (if (string= web-mode-cur-language "css")
+                       (setq emmet-use-css-transform t)
+                     (setq emmet-use-css-transform nil)))))
+
+    ;; smartparens stuff
+    (defun my-web-mode-hook ()
+      (setq web-mode-enable-auto-pairing nil))
+
+    (add-hook 'web-mode-hook 'my-web-mode-hook)
+
+    (defun sp-web-mode-is-code-context (id action context)
+      (and (eq action 'insert)
+           (not (or (get-text-property (point) 'part-side)
+                    (get-text-property (point) 'block-side)))))
+
+    (sp-local-pair 'web-mode "<" nil :when '(sp-web-mode-is-code-context))
+    )
+  )
+
+(use-package flycheck
+  :ensure t
+  :defer t
+  :init
+  (progn
+    (global-flycheck-mode)
+    (flycheck-add-mode 'javascript-eslint 'web-mode))
+  :config
+  (advice-add 'flycheck-eslint-config-exists-p :override (lambda() t))
+  )
+
+(use-package slim-mode
+  :ensure t
+  :defer t)
+
+(use-package gitignore-mode
+  :ensure t
+  :defer t)
+
+(use-package railscasts-reloaded-theme
+  :ensure t
+  :init
+  (load-theme 'railscasts-reloaded t))
+
+(use-package move-text
+  :ensure t
+  :config
+  (move-text-default-bindings))
+
+(use-package ssh-config-mode
+  :ensure t
+  :init (autoload 'ssh-config-mode "ssh-config-mode" t)
+  (add-hook 'ssh-config-mode-hook 'turn-on-font-lock)
+  :mode (("/\\.ssh/config\\'"     . ssh-config-mode)
+         ("/sshd?_config\\'"      . ssh-config-mode)
+         ("/known_hosts\\'"       . ssh-known-hosts-mode)
+         ("/authorized_keys2?\\'" . ssh-authorized-keys-mode)))
+
+(use-package nginx-mode
+  :ensure t
+  :config
+  (progn
+    (add-to-list 'auto-mode-alist '("/etc/nginx/nginx.conf\\'" . nginx-mode))
+    (add-to-list 'auto-mode-alist '("/etc/nginx/sites-\\(enabled\\|available\\)/.*\\'" . nginx-mode))))
+
+(use-package docker
+  :ensure t
+  :commands docker-mode)
+
+(use-package dockerfile-mode
+  :ensure t
+  :mode "Dockerfile.*\\'")
+
+(use-package markdown-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+  (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode)))
+
+(use-package ag
+  :ensure t)
+
+(use-package vcl-mode
+  :ensure t
+  :mode "\\.vcl\\'")
+
+(use-package yaml-mode
+  :ensure t
+  :mode "\\.yml$")
+
+(use-package linum
+  :config
+  (progn
+    (add-hook 'prog-mode-hook 'linum-mode)
+    (add-hook 'text-mode-hook 'linum-mode)
+    (add-hook 'yaml-mode-hook 'linum-mode)
+    ))
+
+(use-package emmet-mode
+  :commands (emmet-mode)
+  :config
+  (setq emmet-move-cursor-between-quotes t) ;; default nil
+  (setq emmet-expand-jsx-className? t) ;; default nil
+  (setq emmet-self-closing-tag-style " /") ;; default "/"
+  (progn
+    (add-hook 'emmet-mode-hook (lambda ()
+                                 (setq emmet-preview-default nil)
+                                 (setq emmet-indentation 2)))
+    (use-package ac-emmet
+      :ensure t
+      :config
+      (add-hook 'sgml-mode-hook 'ac-emmet-html-setup)
+      (add-hook 'css-mode-hook 'ac-emmet-css-setup)
+      )
+    )
+  :init
+  (progn
+    (add-hook 'sgml-mode-hook 'emmet-mode)
+    (add-hook 'web-mode-hook 'emmet-mode)
+    (add-hook 'css-mode-hook 'emmet-mode)))
+
+(use-package undo-tree
+  :ensure t
+  :diminish (undo-tree-mode . "")
+  :config
+  (global-undo-tree-mode 1))
+
+(use-package iedit
+  :ensure t
+  :bind      ("C-c C-;" . iedit-mode))
+
+(use-package smart-mode-line
+  :ensure smart-mode-line
+  :init
+  (progn
+    (setq sml/no-confirm-load-theme t)
+    (display-time-mode)
+    ;;(setq powerline-arrow-shape 'curve)
+    ;;(setq powerline-default-separator-dir '(right . left))
+    ;;(setq sml/theme 'powerline)
+    (setq sml/theme 'dark)
+    (setq sml/mode-width 0)
+    (setq sml/name-width 20)
+    (rich-minority-mode 1)
+    (setf rm-blacklist "")
+    (sml/setup)))
+
+(use-package auto-complete
+  :ensure t
+  :init
+  (progn
+    (require 'auto-complete-config)
+    (setq ac-auto-show-menu t)
+    (setq ac-auto-start t)
+    (setq ac-quick-help-delay 0.3)
+    (setq ac-quick-help-height 30)
+    (setq ac-show-menu-immediately-on-auto-complete t)
+    (ac-config-default)
+    )
+  :config
+  (ac-linum-workaround)
+  (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+  (add-hook 'enh-ruby-mode-hook
+            (lambda ()
+              (make-local-variable 'ac-stop-words)
+              (add-to-list 'ac-stop-words "end"))))
+
+(use-package yasnippet
+  :ensure t
+  :init
+  (progn
+    (yas-global-mode 1)))
+
+(use-package multiple-cursors
+  :ensure t
+  :config
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
+
+(use-package erc
+  :defer t
+  :init
+  (progn
+    (setq
+     erc-hide-list '("JOIN" "PART" "QUIT")
+     erc-insert-timestamp-function 'erc-insert-timestamp-left
+     erc-timestamp-format "[%H:%M] "
+     erc-timestamp-only-if-changed-flag nil
+     erc-truncate-mode t
+
+     ;; erc-auto-query (quote window-noselect)
+     erc-auto-query 'buffer
+
+     erc-autoaway-mode t
+     erc-away-nickname nil
+     erc-join-buffer (quote window-noselect)
+     erc-modules (quote (completion list menu scrolltobottom autojoin button dcc fill irccontrols match move-to-prompt netsplit networks noncommands readonly ring stamp spelling track))
+     erc-nick-notify-mod t
+     erc-prompt ">"
+     erc-public-away-p t
+     erc-speedbar-sort-users-type (quote alphabetical)
+     erc-user-full-name "Tomás Solar"
+     erc-email-userid "tsolar"
+
+     ;; Join channels whenever connecting to Freenode.
+     erc-autojoin-channels-alist '(("freenode.net" "#parabola" "#fsfla" "#flisol-cl")
+                                   )
+     ;; Interpret mIRC-style color commands in IRC chats
+     erc-interpret-mirc-color t
+
+     ;; Kill buffers for channels after /part
+     erc-kill-buffer-on-part t
+     ;; Kill buffers for private queries after quitting the server
+     erc-kill-queries-on-quit t
+     ;; Kill buffers for server messages after quitting the server
+     erc-kill-server-buffer-on-quit t
+     )
+    )
+  :config
+  (progn
+    (use-package :erc-hl-nicks
+      :ensure t)
+    (use-package :erc-nick-notify
+      :ensure t)
+    (erc-spelling-mode 1)
+    (add-hook
+     'window-configuration-change-hook
+     (lambda () (setq erc-fill-column (- (window-width) 2))))
+    )
+  )
 
 (setq debug-on-error nil)
 (setq debug-on-quit nil)

@@ -47,3 +47,8 @@ tramp
 .cask/
 /.hl-save
 /lisp/custom-bkp.el
+/.mc-lists.el
+/helm-adaptive-history
+/network-security.data
+/projectile.cache
+/var/pcache/cache

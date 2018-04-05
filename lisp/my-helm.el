@@ -1,4 +1,5 @@
 (use-package helm-projectile
+  :ensure t
   :after helm
   :bind
   (:map projectile-command-map
