@@ -43,6 +43,8 @@
 
 (global-set-key "\C-xk" 'kill-this-buffer) ; Kill buffer without confirmation
 
+;; do not minimize window
+(unbind-key "C-x C-z")
 
 (defun duplicate-line-or-region (&optional n)
   "Duplicate current line, or region if active.
