@@ -11,11 +11,6 @@
 (set-keyboard-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
-;; exec-path-from-shell
-;; (exec-path-from-shell-initialize)
-;; (exec-path-from-shell-copy-env "PATH")
-;; (exec-path-from-shell-copy-env "JAVA_HOME")
-
 ;; Turn on syntax colouring in all modes supporting it:
 (global-font-lock-mode t)
 
