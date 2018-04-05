@@ -461,6 +461,9 @@
 (use-package emmet-mode
   :commands (emmet-mode)
   :config
+  (setq emmet-move-cursor-between-quotes t) ;; default nil
+  (setq emmet-expand-jsx-className? t) ;; default nil
+  (setq emmet-self-closing-tag-style " /") ;; default "/"
   (progn
     (add-hook 'emmet-mode-hook (lambda ()
                                  (setq emmet-preview-default nil)
