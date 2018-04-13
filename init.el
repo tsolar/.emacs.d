@@ -138,12 +138,12 @@
 
   :init
   (add-hook 'enh-ruby-mode-hook #'subword-mode)
-  (add-hook 'enh-ruby-mode-hook
-            (lambda () (rvm-activate-corresponding-ruby)))
+
   :config
   (progn
-    (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
+    (add-hook 'ruby-mode-hook 'rvm-activate-corresponding-ruby)
     (remove-hook 'enh-ruby-mode-hook 'erm-define-faces)
+    (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
     (setq enh-ruby-deep-indent-paren nil)
 
     (use-package ruby-tools
