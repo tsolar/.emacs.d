@@ -411,6 +411,17 @@
   :config
   (move-text-default-bindings))
 
+(use-package popwin
+  :ensure t
+  :config
+  (progn
+    (popwin-mode)
+    (setq popwin:popup-window-height 30)
+    (push '("*" :regexp t :height 30) popwin:special-display-config)
+    (push '("*helm" :regexp t :height 30) popwin:special-display-config)
+    (push '("*compilation" :regexp t :height 50) popwin:special-display-config)
+    (push '(" *undo-tree*" :width 0.3 :position right) popwin:special-display-config)))
+
 (use-package ssh-config-mode
   :ensure t
   :init (autoload 'ssh-config-mode "ssh-config-mode" t)
