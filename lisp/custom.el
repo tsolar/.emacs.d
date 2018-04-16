@@ -72,7 +72,6 @@
  '(magit-auto-revert-mode nil)
  '(magit-diff-use-overlays nil)
  '(magit-last-seen-setup-instructions "1.4.0")
- '(nyan-wavy-trail t)
  '(package-selected-packages
    (quote
     (yard-mode ruby-tools rubocop rspec-mode :erc-nick-notify :erc-hl-nicks vdiff-magit vimish-fold auto-complete yasnippet yaml-mode web-mode web-beautify vcl-mode use-package undo-tree twittering-mode tea-time syslog-mode ssh-config-mode solarized-theme smartparens smart-mode-line-powerline-theme smart-mode-line slim-mode scss-mode sass-mode rvm robe rinari rainbow-mode rainbow-delimiters railscasts-theme projectile-rails popwin php-auto-yasnippets nyan-mode nginx-mode neotree mustard-theme multiple-cursors move-text minimap markdown-mode magit lua-mode jump json-mode js3-mode inf-ruby iedit hl-anything highlight-symbol highlight-parentheses highlight-indentation hide-lines helm-rhythmbox helm-rails helm-projectile helm-ls-git helm-fuzzier helm-emmet helm-company helm-ag helm haml-mode gitignore-mode github-theme git-gutter-fringe+ git-gutter+ git-commit fringe-helper flymake-yaml flymake-shell flymake-sass flymake-ruby flymake-python-pyflakes flymake-phpcs flymake-php flymake-lua flymake-less flymake-json flymake-jslint flymake-jshint flymake-hlint flymake-haml flymake-gjshint flymake-cursor flymake-css flylisp flycheck-tip flycheck-pyflakes flycheck flx-ido flx findr f exec-path-from-shell epl emms-info-mediainfo emms elscreen ecb easy-repeat diff-hl darktooth-theme csv-mode company-web company color-theme-github color-theme coffee-mode bash-completion async aggressive-indent ag ac-emmet)))
@@ -127,7 +126,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Inconsolata" :foundry "unknown" :slant normal :weight normal :height 113 :width normal))))
+ '(default ((t (:family "Inconsolata" :slant normal :weight normal :height 113 :width normal))))
  '(git-commit-summary ((t (:inherit font-lock-constant-face))))
  '(helm-buffer-process ((t (:foreground "yellow"))))
  '(highlight ((t (:background nil))))

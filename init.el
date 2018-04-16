@@ -556,6 +556,12 @@
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
   (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
 
+(use-package nyan-mode
+  :ensure t
+  :init
+  (setq nyan-animate-nyancat t)
+  (nyan-mode t))
+
 (use-package erc
   :defer t
   :init
