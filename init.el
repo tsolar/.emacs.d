@@ -345,10 +345,15 @@
     (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.blade\\.php\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+
     )
   :config
   (progn
+    (add-to-list 'web-mode-comment-formats '("javascript" . "// "))
+    (add-to-list 'web-mode-comment-formats '("jsx" . "// "))
+    (add-to-list 'web-mode-comment-formats '("php" . "// "))
+
     (set-face-attribute 'web-mode-css-at-rule-face nil :foreground "Pink3")
 
     (setq web-mode-ac-sources-alist
@@ -388,10 +393,90 @@
   :init
   (progn
     (global-flycheck-mode)
-    (flycheck-add-mode 'javascript-eslint 'web-mode))
+    (flycheck-add-mode 'javascript-eslint 'web-mode)
+    (flycheck-add-mode 'javascript-eslint 'rjsx-mode)
+    (setq-default flycheck-temp-prefix ".flycheck"))
+
   :config
-  (advice-add 'flycheck-eslint-config-exists-p :override (lambda() t))
+  ;; (advice-add 'flycheck-eslint-config-exists-p :override (lambda() t))
+
+  (defun my/use-eslint-from-node-modules ()
+    (let* ((root (locate-dominating-file
+                  (or (buffer-file-name) default-directory)
+                  "node_modules"))
+           (eslint (and root
+                        (expand-file-name "node_modules/eslint/bin/eslint.js"
+                                          root))))
+      (when (and eslint (file-executable-p eslint))
+        (setq-local flycheck-javascript-eslint-executable eslint))))
+  (add-hook 'flycheck-mode-hook #'my/use-eslint-from-node-modules))
+
+(use-package js2-mode
+  :ensure t
+  :mode "\\.js$"
+  :init
+  (setq js-basic-indent 2)
+  (setq-default js2-basic-indent 2
+                js2-basic-offset 2
+                js2-auto-indent-p t
+                js2-cleanup-whitespace t
+                js2-enter-indents-newline t
+                js2-indent-on-enter-key t
+                js2-global-externs (list "window" "module" "require" "buster" "sinon" "assert" "refute" "setTimeout" "clearTimeout" "setInterval" "clearInterval" "location" "__dirname" "console" "JSON" "jQuery" "$"))
+
+  ;; Better imenu
+  (add-hook 'js2-mode-hook #'js2-imenu-extras-mode)
+
+  (add-hook 'js2-mode-hook
+            (lambda ()
+              (push '("function" . ?ƒ) prettify-symbols-alist)))
+
+  (add-hook 'js2-mode-hook (lambda()
+                               (flycheck-mode +1)
+                               (when (executable-find "eslint")
+                                 (flycheck-select-checker 'javascript-eslint))))
+
+  (add-hook 'js2-mode-hook (lambda ()
+                             (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
+
+
+  :config
+  ;; js-mode (which js2 is based on) binds "M-." which conflicts with xref, so
+  ;; unbind it.
+  (unbind-key "M-." js2-mode-map))
+
+(use-package tern
+  :ensure t
+  :init (add-hook 'js2-mode-hook (lambda () (tern-mode t)))
+  ;; :config
+  ;; (use-package company-tern
+  ;;   :ensure t
+  ;;   :init (add-to-list 'company-backends 'company-tern))
   )
+
+(use-package js2-refactor
+  :ensure t
+  :init   (add-hook 'js2-mode-hook 'js2-refactor-mode)
+  :config (js2r-add-keybindings-with-prefix "C-c ."))
+
+(use-package xref-js2
+  :ensure t)
+
+(use-package rjsx-mode
+  :ensure t
+  ;; :mode "\\.jsx\\'"
+  :interpreter "node"
+  :config
+  (add-hook 'rjsx-mode-hook 'emmet-mode)
+  )
+
+(use-package json-mode
+  :mode "\\.json\\'")
+
+;; (use-package color-identifiers-mode
+;;   :ensure t
+;;   :init
+;;   (add-hook 'js2-mode-hook 'color-identifiers-mode))
 
 (use-package slim-mode
   :ensure t
@@ -474,11 +559,15 @@
     ))
 
 (use-package emmet-mode
+  :ensure t
   :commands (emmet-mode)
-  :config
+  :init
+  (setq emmet-indentation 2)
   (setq emmet-move-cursor-between-quotes t) ;; default nil
   (setq emmet-expand-jsx-className? t) ;; default nil
   (setq emmet-self-closing-tag-style " /") ;; default "/"
+
+  :config
   (progn
     (add-hook 'emmet-mode-hook (lambda ()
                                  (setq emmet-preview-default nil)
