@@ -141,7 +141,7 @@
 
   :config
   (progn
-    (add-hook 'ruby-mode-hook 'rvm-activate-corresponding-ruby)
+    (add-hook 'enh-ruby-mode-hook 'rvm-activate-corresponding-ruby)
     (remove-hook 'enh-ruby-mode-hook 'erm-define-faces)
     (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
     (setq enh-ruby-deep-indent-paren nil)
