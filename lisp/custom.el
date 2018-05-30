@@ -98,7 +98,7 @@
     ((encoding . utf-8)
      (less-css-output-directory . "../css")
      (less-css-compile-at-save . t))))
- '(save-place t nil (saveplace))
+ '(save-place-mode t nil (saveplace))
  '(scroll-conservatively 1)
  '(search-ring-update t)
  '(send-mail-function (quote smtpmail-send-it))
