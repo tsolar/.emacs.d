@@ -132,6 +132,7 @@
  '(highlight ((t (:background nil))))
  '(iedit-occurrence ((t (:background "gold" :foreground "black"))))
  '(linum ((t (:foreground "dark gray"))))
+ '(linum-highlight-face ((t (:inherit default :foreground "goldenrod"))))
  '(show-paren-match ((t (:background nil :foreground "gold" :weight bold))))
  '(sp-show-pair-match-face ((t (:inherit show-paren-match :background nil))))
  '(sp-show-pair-mismatch-face ((t (:inherit show-paren-mismatch :background nil :foreground "white"))))
