@@ -496,6 +496,12 @@
   :config
   (move-text-default-bindings))
 
+(use-package guide-key
+  :init (progn
+          (setq guide-key/guide-key-sequence '("C-c p"))
+          (guide-key-mode 1))
+  :ensure t)
+
 (use-package popwin
   :ensure t
   :config
